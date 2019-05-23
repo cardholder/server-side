@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ""
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ec2-18-195-20-221.eu-central-1.compute.amazonaws.com", "127.0.0.1", "127.0.1.1", "0.0.0.0"]
+ALLOWED_HOSTS = ["ec2-18-185-18-129.eu-central-1.compute.amazonaws.com", "127.0.0.1", "127.0.1.1", "0.0.0.0"]
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'chat',
+    'lobby',
 	'channels',
 ]
 
@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cardholderdb',
         'USER': 'cardholderuser',
-        'PASSWORD': '',
+        'PASSWORD': os.environ["DB_PASS"],
         'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {

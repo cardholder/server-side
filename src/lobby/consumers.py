@@ -1,20 +1,39 @@
-# chat/consumers.py
+# lobby/consumers.py
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
 
-class ChatConsumer(WebsocketConsumer):
+class LobbyListConsumer(WebsocketConsumer):
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-
+        self.room_group_name = "lobbylist"
+		
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
         )
-
         self.accept()
+        self.sendLobbyList()
+		
+    def sendLobbyList(self):
+        # Sends LobbyList to Client
+        self.send(text_data=json.dumps({
+            "lobbies": [
+                {
+                    "id": "hAsfh8n",
+                    "game": "Durak",
+                    "visibility": "private",
+                    "max_players": 8,
+                    "players": [
+                        {
+                            "id": 0,
+                            "name": "Player 1",
+                            "role": "leader"
+                        }
+                    ]
+                }
+            ]
+		}))
 
     def disconnect(self, close_code):
         # Leave room group

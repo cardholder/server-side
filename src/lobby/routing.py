@@ -5,4 +5,5 @@ from . import consumers
 
 websocket_urlpatterns = [
     url(r"^lobbylist/$", consumers.LobbyListConsumer),
+    url(r"^create/$", consumers.LobbyCreateConsumer),
 ]

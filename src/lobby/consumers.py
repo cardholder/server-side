@@ -103,12 +103,13 @@ class LobbyCreateConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
 
-        # Receive message from WebSocket
-
+    # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        lobby_id = create_lobby(message["game"], message["visibility"], message["max_players"])
+        game = text_data_json['game']
+        visibility = text_data_json['visibility']
+        max_players = text_data_json['max_players']
+        lobby_id = create_lobby(game, visibility, max_players)
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({

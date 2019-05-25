@@ -142,7 +142,7 @@ class LobbyConsumer(WebsocketConsumer):
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'lobby': players
+            'players': players
         }))
 
     def disconnect(self, close_code):

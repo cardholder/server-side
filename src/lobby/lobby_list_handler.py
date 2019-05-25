@@ -2,6 +2,8 @@
 import random
 import string
 from .lobby import Lobby
+from .player import Player
+from channels.layers import get_channel_layer
 
 lobby_list = {}
 
@@ -23,10 +25,41 @@ def remove_lobby(lobby_id):
 
 
 def generate_id(string_length=7):
-    """Generate a random string of fixed length """
+    # Generate a random string of fixed length
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
 def check_if_lobby_exists(lobby_id):
     return str(lobby_id) in lobby_list
+
+
+def update_lobby(lobby_id):
+    channel_layer = get_channel_layer()
+    await channel_layer.group_send(
+        lobby_id,
+        {"type": "lobby.update_lobby", "message": lobby_list[str(lobby_id)]},
+    )
+
+def add_player_to_lobby(lobby_id, name):
+    lobby = lobby_list[str(lobby_id)]
+    player_id = get_highest_player_id_of_lobby(lobby)
+    role = "player"
+    player = Player(player_id, name, role)
+    lobby.add_player(player)
+    update_lobby(lobby_id)
+
+def remove_player_from_lobby(lobby_id, player):
+    lobby_list[str(lobby_id)].remove_player(player)
+    update_lobby(lobby_id)
+
+def get_highest_player_id_of_lobby(lobby):
+    player_id = -1
+    for player in lobby.players:
+        if player.player_id > player_id:
+            player_id = player.player_id + 1
+    return player_id
+
+def get_players_of_lobby(lobby_id):
+    lobby = lobby_list["lobby_id"]
+    return lobby.players

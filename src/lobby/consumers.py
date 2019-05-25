@@ -117,3 +117,33 @@ class LobbyCreateConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         pass
+
+
+class LobbyConsumer(WebsocketConsumer):
+
+    def connect(self):
+        self.room_group_name = self.scope['url_route']['kwargs']['room_name']
+
+        if check_if_lobby_exists(self.room_group_name):
+            # Join room group
+            async_to_sync(self.channel_layer.group_add)(
+                self.room_group_name,
+                self.channel_name
+            )
+
+            self.accept()
+
+    # Receive message from WebSocket
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        add_player_to_lobby(message["lobby_id"], message["name"])
+        players = get_players_of_lobby(message["lobby_id"])
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'lobby': players
+        }))
+
+    def disconnect(self, close_code):
+        pass

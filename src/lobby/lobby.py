@@ -13,8 +13,9 @@ class Lobby():
         self.max_players = max_players
         self.players = []
 
-    def add_player(self):
+    def add_player(self, player):
+        self.players.append(player)
         pass
 
-    def remove_player(self):
-        pass
+    def remove_player(self, player):
+        self.players.remove(player)

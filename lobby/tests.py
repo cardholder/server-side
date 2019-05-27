@@ -8,5 +8,6 @@ class ChatTests(TestCase):
             var = True
             assert True == var
 
+
         finally:
             pass

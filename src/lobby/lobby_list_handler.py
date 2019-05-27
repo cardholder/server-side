@@ -34,12 +34,12 @@ def check_if_lobby_exists(lobby_id):
     return str(lobby_id) in lobby_list
 
 
-def update_lobby(lobby_id):
-    channel_layer = get_channel_layer()
-    await channel_layer.group_send(
-        lobby_id,
-        {"type": "lobby.update_lobby", "message": lobby_list[str(lobby_id)]},
-    )
+# def update_lobby(lobby_id):
+    # channel_layer = get_channel_layer()
+    # await channel_layer.group_send(
+        # lobby_id,
+        # {"type": "lobby.update_lobby", "message": lobby_list[str(lobby_id)]},
+    # )
 
 def add_player_to_lobby(lobby_id, name):
     lobby = lobby_list[str(lobby_id)]

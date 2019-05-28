@@ -86,6 +86,10 @@ DATABASES = {
         'PORT': '',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+        'TEST': {
+            'NAME': 'test_cardholderdb',
+            'PASSWORD': '1234',
         }
     }
 }

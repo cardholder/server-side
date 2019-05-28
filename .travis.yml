@@ -16,6 +16,7 @@ before_script:
   - sudo mysql -e 'CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;CREATE USER cardholderuser@localhost IDENTIFIED BY "1234";GRANT ALL PRIVILEGES ON test_cardholderdb.* TO cardholderuser@localhost;FLUSH PRIVILEGES;'
 
 before_install:
+  - - sudo apt-get install -y libmariaclient-dev
   - export DJANGO_SETTINGS_MODULE=cardholder.settings
   - export PYTHONPATH=$HOME/builds/cardholder/server-side
   - export PIP_USE_MIRRORS=true

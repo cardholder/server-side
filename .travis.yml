@@ -13,7 +13,7 @@ env:
   - DJANGO=2.2
 
 before_script:
-  - sudo mysql -e 'CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;GRANT ALL PRIVILEGES ON test_cardholderdb.* TO travis@localhost;FLUSH PRIVILEGES;' -u root
+  - sudo mysql -e 'CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;' -u root
 
 before_install:
   - sudo apt-get install -y libmariadbclient-dev 

@@ -3,6 +3,12 @@ language: python
 python:
   - 3.6
 
+services:
+  - mysql
+
+addons:
+  mariadb: '10.0'
+
 env:
   - DJANGO=2.2
 
@@ -10,6 +16,7 @@ before_install:
   - export DJANGO_SETTINGS_MODULE=cardholder.settings
   - export PYTHONPATH=$HOME/builds/cardholder/server-side
   - export PIP_USE_MIRRORS=true
+  - sudo mysql -e 'CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;CREATE USER cardholderuser@localhost IDENTIFIED BY $DB_PASS;GRANT ALL PRIVILEGES ON test_cardholderdb.* TO cardholderuser@localhost;FLUSH PRIVILEGES;'
 
 install:
   - pip install -r requirements.txt

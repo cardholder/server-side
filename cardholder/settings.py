@@ -89,8 +89,7 @@ DATABASES = {
         },
         'TEST': {
             'NAME': 'test_cardholderdb',
-            'USER': 'travis',
-            'PASSWORD': '1234',
+            'PASSWORD': '',
         }
     }
 }

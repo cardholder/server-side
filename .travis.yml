@@ -13,7 +13,7 @@ env:
   - DJANGO=2.2
 
 before_script:
-  - sudo mysql -e "CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;CREATE USER cardholderuser@localhost IDENTIFIED BY '';GRANT ALL PRIVILEGES ON test_cardholderdb.* TO cardholderuser@localhost;FLUSH PRIVILEGES;" -u root
+  - sudo mysql -e "CREATE DATABASE test_cardholderdb CHARACTER SET UTF8;CREATE USER cardholderuser@localhost IDENTIFIED BY '$DB_PASS';GRANT ALL PRIVILEGES ON test_cardholderdb.* TO cardholderuser@localhost;FLUSH PRIVILEGES;" -u root
   - sudo service mysql restart
 
 before_install:

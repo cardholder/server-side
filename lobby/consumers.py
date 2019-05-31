@@ -20,65 +20,9 @@ class LobbyListConsumer(WebsocketConsumer):
 
     def send_lobbylist(self):
         # Sends LobbyList to Client
+        lobbies = get_lobby_list_as_array()
         self.send(text_data=json.dumps({
-            "lobbies": [
-                {
-                    "id": "hAsfh8n",
-                    "game": "Durak",
-                    "visibility": "private",
-                    "max_players": 8,
-                    "players": [
-                        {
-                            "id": 0,
-                            "name": "PlayerA 1",
-                            "role": "leader"
-                        },
-                        {
-                            "id": 1,
-                            "name": "PlayerA 2",
-                            "role": "player"
-                        },
-                        {
-                            "id": 2,
-                            "name": "PlayerA 3",
-                            "role": "player"
-                        },
-                        {
-                            "id": 3,
-                            "name": "PlayerA 4",
-                            "role": "player"
-                        }
-                    ]
-                },
-                {
-                    "id": "hfgsD23",
-                    "game": "Durak",
-                    "visibility": "private",
-                    "max_players": 8,
-                    "players": [
-                        {
-                            "id": 0,
-                            "name": "PlayerB 1",
-                            "role": "leader"
-                        },
-                        {
-                            "id": 1,
-                            "name": "PlayerB 2",
-                            "role": "player"
-                        },
-                        {
-                            "id": 2,
-                            "name": "PlayerB 3",
-                            "role": "player"
-                        },
-                        {
-                            "id": 3,
-                            "name": "PlayerB 4",
-                            "role": "player"
-                        }
-                    ]
-                }
-            ]
+            "lobbies": str(lobbies)
         }))
 
     def disconnect(self, close_code):
@@ -89,12 +33,12 @@ class LobbyListConsumer(WebsocketConsumer):
         )
 
     # Receive message from room group
-    def chat_message(self, event):
-        message = event['message']
+    def update_lobby(self, event):
+        lobby = event['lobby']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': message
+            'lobby': str(lobby)
         }))
 
 
@@ -147,4 +91,14 @@ class LobbyConsumer(WebsocketConsumer):
         }))
 
     def disconnect(self, close_code):
+        # remove_player_from_lobby(self.room_group_name, )
         pass
+
+    # Receive message from room group
+    def update_lobby(self, event):
+        lobby = event['lobby']
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'lobby': str(lobby)
+        }))

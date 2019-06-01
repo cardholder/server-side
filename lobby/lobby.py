@@ -13,7 +13,6 @@ class Lobby:
 
     def add_player(self, player):
         self.players.append(player)
-        pass
 
     def remove_player(self, player):
         self.players.remove(player)

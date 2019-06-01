@@ -37,19 +37,22 @@ def check_if_lobby_exists(lobby_id):
 
 def update_lobby(lobby_id):
     channel_layer = get_channel_layer()
+    lobby = lobby_list[str(lobby_id)]
+    print("\n\n\n\n\n\n")
+    print(str(lobby))
     async_to_sync(channel_layer.group_send)(
         lobby_id,
-        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)].__dict__},
+        {"type": "update.lobby", "lobby": lobby.__dict__},
     )
     async_to_sync(channel_layer.group_send)(
         "lobbylist",
-        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)].__dict__},
+        {"type": "update.lobby", "lobby": lobby.__dict__},
     )
 
 
 def add_player_to_lobby(lobby_id, name):
     print("add Player")
-    print(lobby_id)
+    print(name)
     lobby = lobby_list[str(lobby_id)]
     player_id = get_highest_player_id_of_lobby(lobby)
     role = "player"

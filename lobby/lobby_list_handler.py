@@ -39,15 +39,17 @@ def update_lobby(lobby_id):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         lobby_id,
-        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)]},
+        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)].__dict__},
     )
     async_to_sync(channel_layer.group_send)(
         "lobbylist",
-        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)]},
+        {"type": "update.lobby", "lobby": lobby_list[str(lobby_id)].__dict__},
     )
 
 
 def add_player_to_lobby(lobby_id, name):
+    print("add Player")
+    print(lobby_id)
     lobby = lobby_list[str(lobby_id)]
     player_id = get_highest_player_id_of_lobby(lobby)
     role = "player"
@@ -65,7 +67,8 @@ def get_highest_player_id_of_lobby(lobby):
     player_id = -1
     for player in lobby.players:
         if player.player_id > player_id:
-            player_id = player.player_id + 1
+            player_id = player.player_id
+    player_id + 1
     return player_id
 
 

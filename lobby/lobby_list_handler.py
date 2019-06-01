@@ -38,8 +38,6 @@ def check_if_lobby_exists(lobby_id):
 def update_lobby(lobby_id):
     channel_layer = get_channel_layer()
     lobby = lobby_list[str(lobby_id)]
-    print("\n\n\n\n\n\n")
-    print(lobby.to_json())
     async_to_sync(channel_layer.group_send)(
         lobby_id,
         {"type": "update.lobby", "lobby": lobby.to_json()},
@@ -69,7 +67,7 @@ def get_highest_player_id_of_lobby(lobby):
     for player in lobby.players:
         if player.player_id > player_id:
             player_id = player.player_id
-    player_id + 1
+    player_id = player_id + 1
     return player_id
 
 

@@ -1,5 +1,5 @@
 # This is the class for a lobby
-import json
+from .player import Player
 
 
 class Lobby:
@@ -27,6 +27,6 @@ class Lobby:
         lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
                       "players": []}
         for player in self.players:
-            lobby_dict["players"].append(player.__dict__)
+            lobby_dict["players"].append(player.to_json())
 
         return lobby_dict

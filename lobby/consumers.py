@@ -35,10 +35,12 @@ class LobbyListConsumer(WebsocketConsumer):
     # Receive message from room group
     def update_lobby(self, event):
         lobby = event['lobby']
+        print("LobbyListConsumer")
+        print(lobby.to_json())
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'lobby': lobby
+            'lobby': lobby.to_json()
         }))
 
 
@@ -83,12 +85,6 @@ class LobbyConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         add_player_to_lobby(message["lobby_id"], message["name"])
-        players = get_players_of_lobby(message["lobby_id"])
-
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'players': players
-        }))
 
     def disconnect(self, close_code):
         # remove_player_from_lobby(self.room_group_name, )
@@ -97,8 +93,9 @@ class LobbyConsumer(WebsocketConsumer):
     # Receive message from room group
     def update_lobby(self, event):
         lobby = event['lobby']
-
+        print("LobbyConsumer")
+        print(lobby.to_json())
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'lobby': lobby
+            'lobby': lobby.to_json()
         }))

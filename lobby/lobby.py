@@ -1,4 +1,5 @@
 # This is the class for a lobby
+import json
 
 
 class Lobby:
@@ -16,3 +17,6 @@ class Lobby:
 
     def remove_player(self, player):
         self.players.remove(player)
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

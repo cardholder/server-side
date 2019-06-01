@@ -23,7 +23,7 @@ class LobbyListConsumer(WebsocketConsumer):
         lobbies = get_lobby_list_as_array()
         print(str(lobbies))
         self.send(text_data=json.dumps({
-            "lobbies": str(lobbies)
+            "lobbies": lobbies
         }))
 
     def disconnect(self, close_code):

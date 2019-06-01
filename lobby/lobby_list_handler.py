@@ -79,4 +79,4 @@ def get_lobby_list_as_array():
     for key, value in lobby_list.items():
         lobby_arr.append(value)
 
-    return lobby_list
+    return lobby_arr

@@ -22,3 +22,11 @@ class Lobby:
             return True
 
         return False
+
+    def to_json(self):
+        lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
+                      "players": []}
+        for player in self.players:
+            lobby_dict["players"].append(player.__dict__)
+
+        return lobby_dict

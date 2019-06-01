@@ -39,14 +39,14 @@ def update_lobby(lobby_id):
     channel_layer = get_channel_layer()
     lobby = lobby_list[str(lobby_id)]
     print("\n\n\n\n\n\n")
-    print(lobby.__dict__)
+    print(lobby.to_json())
     async_to_sync(channel_layer.group_send)(
         lobby_id,
-        {"type": "update.lobby", "lobby": lobby},
+        {"type": "update.lobby", "lobby": lobby.to_json()},
     )
     async_to_sync(channel_layer.group_send)(
         "lobbylist",
-        {"type": "update.lobby", "lobby": lobby},
+        {"type": "update.lobby", "lobby": lobby.to_json()},
     )
 
 
@@ -83,6 +83,6 @@ def get_lobby_list_as_array_no_empty_rooms():
     for key, value in lobby_list.items():
         lobby = value
         if lobby.is_not_empty():
-            lobby_arr.append(lobby.__dict__)
+            lobby_arr.append(lobby.to_json())
 
     return lobby_arr

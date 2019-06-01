@@ -20,7 +20,7 @@ class LobbyListConsumer(WebsocketConsumer):
 
     def send_lobbylist(self):
         # Sends LobbyList to Client
-        lobbies = get_lobby_list_as_array()
+        lobbies = get_lobby_list_as_array_no_empty_rooms()
         self.send(text_data=json.dumps({
             "lobbies": lobbies
         }))

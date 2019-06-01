@@ -74,9 +74,11 @@ def get_players_of_lobby(lobby_id):
     return lobby.players
 
 
-def get_lobby_list_as_array():
+def get_lobby_list_as_array_no_empty_rooms():
     lobby_arr = []
     for key, value in lobby_list.items():
-        lobby_arr.append(value.__dict__)
+        lobby = value
+        if lobby.is_not_empty():
+            lobby_arr.append(lobby.__dict__)
 
     return lobby_arr

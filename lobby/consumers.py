@@ -36,11 +36,11 @@ class LobbyListConsumer(WebsocketConsumer):
     def update_lobby(self, event):
         lobby = event['lobby']
         print("LobbyListConsumer")
-        print(lobby.to_json())
+        print(lobby.__dict__)
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'lobby': lobby.to_json()
+            'lobby': lobby.__dict__
         }))
 
 
@@ -94,8 +94,8 @@ class LobbyConsumer(WebsocketConsumer):
     def update_lobby(self, event):
         lobby = event['lobby']
         print("LobbyConsumer")
-        print(lobby.to_json())
+        print(lobby.__dict__)
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'lobby': lobby.to_json()
+            'lobby': lobby.__dict__
         }))

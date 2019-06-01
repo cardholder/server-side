@@ -77,6 +77,6 @@ def get_players_of_lobby(lobby_id):
 def get_lobby_list_as_array():
     lobby_arr = []
     for key, value in lobby_list.items():
-        lobby_arr.append(value)
+        lobby_arr.append(value.__dict__)
 
     return lobby_arr

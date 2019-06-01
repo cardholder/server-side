@@ -84,7 +84,7 @@ class LobbyConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        add_player_to_lobby(message["lobby_id"], message["name"])
+        add_player_to_lobby(self.room_group_name, message["name"])
 
     def disconnect(self, close_code):
         # remove_player_from_lobby(self.room_group_name, )

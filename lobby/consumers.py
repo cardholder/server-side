@@ -91,6 +91,8 @@ class LobbyConsumer(WebsocketConsumer):
 
     def connect(self):
         self.room_group_name = self.scope['url_route']['kwargs']['room_name']
+        self.lobby_id = None
+        self.player = None
 
         if check_if_lobby_exists(self.room_group_name):
             # Join room group
@@ -108,7 +110,7 @@ class LobbyConsumer(WebsocketConsumer):
         self.lobby_id, self.player = add_player_to_lobby(self.room_group_name, player_name)
 
     def disconnect(self, close_code):
-        if hasattr(self, 'lobby_id'):
+        if self.lobby_id is not None:
             remove_player_from_lobby(self.lobby_id, self.player)
 
     # Receive message from room group

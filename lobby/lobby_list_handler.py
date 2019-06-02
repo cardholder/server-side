@@ -57,18 +57,18 @@ def update_lobby(lobby_id):
         remove_lobby(lobby_id)
 
 
-def add_player_to_lobby(lobby_id, name, channel_scope):
+def add_player_to_lobby(lobby_id, name, channel_layer):
     lobby = lobby_list[str(lobby_id)]
     player_id = lobby.get_highest_player_id_of_lobby()
     role = "player"
-    player = Player(player_id, name, role, channel_scope)
+    player = Player(player_id, name, role, channel_layer)
     lobby.add_player(player)
     update_lobby(lobby_id)
 
 
-def remove_player_from_lobby(lobby_id, channel_scope):
+def remove_player_from_lobby(lobby_id, channel_layer):
     lobby = lobby_list[str(lobby_id)]
-    player = lobby.get_player_with_channel_scope(channel_scope)
+    player = lobby.get_player_with_channel_layer(channel_layer)
     lobby.remove_player(player)
     if len(lobby.players) == 0:
         remove_lobby(lobby_id)

@@ -37,9 +37,9 @@ class Lobby:
             player_arr.append(player.to_json())
         return player_arr
 
-    def get_player_with_channel_scope(self, channel_scope):
+    def get_player_with_channel_layer(self, channel_layer):
         for player in self.players:
-            if player.channel_scope == channel_scope:
+            if player.channel_layer == channel_layer:
                 return player
         return None
 

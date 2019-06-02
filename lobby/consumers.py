@@ -105,12 +105,10 @@ class LobbyConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         player_name = text_data_json['name']
-        print("\n\n\n\n")
-        print(self.channel_layer)
-        add_player_to_lobby(self.room_group_name, player_name, self)
+        self.player = add_player_to_lobby(self.room_group_name, player_name)
 
     def disconnect(self, close_code):
-        # remove_player_from_lobby(self.room_group_name, )
+        remove_player_from_lobby(self.player)
         pass
 
     # Receive message from room group

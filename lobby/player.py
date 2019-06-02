@@ -3,11 +3,10 @@
 
 class Player:
 
-    def __init__(self, player_id, name, role, channel_layer):
+    def __init__(self, player_id, name, role):
         self.id = player_id
         self.name = name
         self.role = role
-        self.channel_layer = channel_layer
 
     def to_json(self):
         player_dict = {"id": self.id, "name": self.name, "role": self.role}

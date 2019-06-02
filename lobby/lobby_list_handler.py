@@ -54,7 +54,6 @@ def update_lobby(lobby_id):
             "lobbylist",
             {"type": "remove.lobby", "lobby_id": lobby_id},
         )
-        remove_lobby(lobby_id)
 
 
 def add_player_to_lobby(lobby_id, name):

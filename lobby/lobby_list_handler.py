@@ -57,8 +57,12 @@ def add_player_to_lobby(lobby_id, name):
     update_lobby(lobby_id)
 
 
-def remove_player_from_lobby(lobby_id, player):
-    lobby_list[str(lobby_id)].remove_player(player)
+def remove_player_from_lobby(lobby_id, channel_scope):
+    lobby = lobby_list[str(lobby_id)]
+    player = lobby.get_player_with_channel_scope(channel_scope)
+    lobby.remove_player(player)
+    if len(lobby.players) == 0:
+        remove_lobby(lobby_id)
     update_lobby(lobby_id)
 
 

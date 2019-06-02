@@ -46,7 +46,7 @@ class Lobby:
     def get_highest_player_id_of_lobby(self):
         player_id = -1
         for player in self.players:
-            if player.player_id > player_id:
-                player_id = player.player_id
+            if player.id > player_id:
+                player_id = player.id
         player_id = player_id + 1
         return player_id

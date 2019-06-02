@@ -47,7 +47,7 @@ def update_lobby(lobby_id):
         )
         async_to_sync(channel_layer.group_send)(
             "lobbylist",
-            {"type": "update.lobby", "players": players},
+            {"type": "update.lobby", "lobby": lobby.to_json()},
         )
     else:
         async_to_sync(channel_layer.group_send)(

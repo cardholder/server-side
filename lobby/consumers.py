@@ -92,6 +92,7 @@ class LobbyConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         player_name = text_data_json['name']
         add_player_to_lobby(self.room_group_name, player_name, self.scope["user"])
+        print("\n\n\n\n")
         print(self.scope["user"])
 
     def disconnect(self, close_code):

@@ -3,6 +3,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
 from .lobby_list_handler import *
+from .models import Game
 
 
 class LobbyListConsumer(WebsocketConsumer):
@@ -67,6 +68,19 @@ class LobbyCreateConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'id': lobby_id
+        }))
+
+    def send_game_options(self):
+        games = []
+
+        database_games = Game.objects.all().values("name", "show_name", "max_players")
+
+        for game in database_games:
+            games.append(game)
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'games': games
         }))
 
     def disconnect(self, close_code):

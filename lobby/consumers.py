@@ -60,6 +60,7 @@ class LobbyCreateConsumer(WebsocketConsumer):
     # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        print(text_data_json)
         game = text_data_json['game']
         visibility = text_data_json['visibility']
         max_players = text_data_json['max_players']

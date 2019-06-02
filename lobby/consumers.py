@@ -34,11 +34,11 @@ class LobbyListConsumer(WebsocketConsumer):
 
     # Receive update from update lobby in lobby_list_handler
     def update_lobby(self, event):
-        players = event['players']
+        lobby = event['lobby']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'players': players
+            'lobby': lobby
         }))
 
     # Receive update from update lobby in lobby_list_handler

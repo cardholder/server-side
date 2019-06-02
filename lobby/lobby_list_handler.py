@@ -64,7 +64,7 @@ def add_player_to_lobby(lobby_id, name):
     player = Player(player_id, name, role)
     lobby.add_player(player)
     update_lobby(lobby_id)
-    return player
+    return lobby_id, player
 
 
 def remove_player_from_lobby(lobby_id, player):

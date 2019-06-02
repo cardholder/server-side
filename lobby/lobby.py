@@ -31,8 +31,22 @@ class Lobby:
 
         return lobby_dict
 
+    def players_to_json(self):
+        player_arr = []
+        for player in self.players:
+            player_arr.append(player.to_json())
+        return player_arr
+
     def get_player_with_channel_scope(self, channel_scope):
         for player in self.players:
             if player.channel_scope == channel_scope:
                 return player
         return None
+
+    def get_highest_player_id_of_lobby(self):
+        player_id = -1
+        for player in self.players:
+            if player.player_id > player_id:
+                player_id = player.player_id
+        player_id = player_id + 1
+        return player_id

@@ -40,20 +40,22 @@ def update_lobby(lobby_id):
     lobby = lobby_list[str(lobby_id)]
     players = lobby.players_to_json()
 
-    if len(players) > 0:
-        async_to_sync(channel_layer.group_send)(
-            lobby_id,
-            {"type": "update.lobby", "players": players},
-        )
-        async_to_sync(channel_layer.group_send)(
-            "lobbylist",
-            {"type": "update.lobby", "lobby": lobby.to_json()},
-        )
-    else:
-        async_to_sync(channel_layer.group_send)(
-            "lobbylist",
-            {"type": "remove.lobby", "lobby_id": lobby_id},
-        )
+    async_to_sync(channel_layer.group_send)(
+        lobby_id,
+        {"type": "update.lobby", "players": players},
+    )
+    async_to_sync(channel_layer.group_send)(
+        "lobbylist",
+        {"type": "update.lobby", "lobby": lobby.to_json()},
+    )
+
+
+def send_remove_lobby(lobby_id):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "lobbylist",
+        {"type": "remove.lobby", "lobby_id": lobby_id},
+    )
 
 
 def add_player_to_lobby(lobby_id, name):
@@ -71,7 +73,9 @@ def remove_player_from_lobby(lobby_id, player):
     lobby.remove_player(player)
     if len(lobby.players) == 0:
         remove_lobby(lobby_id)
-    update_lobby(lobby_id)
+        send_remove_lobby(lobby_id)
+    else:
+        update_lobby(lobby_id)
 
 
 def get_players_of_lobby(lobby_id):

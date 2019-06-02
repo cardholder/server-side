@@ -108,7 +108,7 @@ class LobbyConsumer(WebsocketConsumer):
         self.lobby_id, self.player = add_player_to_lobby(self.room_group_name, player_name)
 
     def disconnect(self, close_code):
-        if self.lobby_id is not None:
+        if hasattr(self.lobby_id):
             remove_player_from_lobby(self.lobby_id, self.player)
 
     # Receive message from room group

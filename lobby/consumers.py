@@ -98,7 +98,7 @@ class LobbyConsumer(WebsocketConsumer):
         if self.lobby_id is None:
             self.lobby_id, self.player = add_player_to_lobby(self.room_group_name, player_name)
             lobby = get_lobby(self.lobby_id)
-            if self.lobby_id.is not None:
+            if self.lobby_id is not None:
                 self.send_lobby(lobby)
 
     def disconnect(self, close_code):

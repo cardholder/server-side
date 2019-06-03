@@ -44,10 +44,11 @@ def update_lobby(lobby_id):
         lobby_id,
         {"type": "update.lobby", "players": players},
     )
-    async_to_sync(channel_layer.group_send)(
-        "lobbylist",
-        {"type": "update.lobby", "lobby": lobby.to_json()},
-    )
+    if lobby.visibility == "public":
+        async_to_sync(channel_layer.group_send)(
+            "lobbylist",
+            {"type": "update.lobby", "lobby": lobby.to_json()},
+        )
 
 
 def send_remove_lobby(lobby_id):

@@ -84,9 +84,6 @@ def add_player_to_lobby(lobby_id, name):
     lobby.add_player(player)
     update_lobby(lobby_id)
 
-    if not lobby.is_not_full():
-        send_remove_lobby(lobby_id)
-
     return lobby_id, player
 
 

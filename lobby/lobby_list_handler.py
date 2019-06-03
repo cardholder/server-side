@@ -44,7 +44,7 @@ def update_lobby(lobby_id):
         lobby_id,
         {"type": "update.lobby", "players": players},
     )
-    if lobby.visibility != "private":
+    if lobby.visibility == "public":
         async_to_sync(channel_layer.group_send)(
             "lobbylist",
             {"type": "update.lobby", "lobby": lobby.to_json()},

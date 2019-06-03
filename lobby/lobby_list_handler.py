@@ -71,7 +71,7 @@ def add_player_to_lobby(lobby_id, name):
 
     if not lobby.is_not_full():
         send_lobby_is_full(lobby_id)
-        return None
+        return None, None
 
     player_id = lobby.get_highest_player_id_of_lobby()
     if player_id == 0:

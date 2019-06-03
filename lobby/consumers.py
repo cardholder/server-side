@@ -56,7 +56,6 @@ class LobbyCreateConsumer(WebsocketConsumer):
 
     def connect(self):
         self.accept()
-        self.send_game_options()
 
     # Receive message from WebSocket
     def receive(self, text_data):
@@ -69,19 +68,6 @@ class LobbyCreateConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'id': lobby_id
-        }))
-
-    def send_game_options(self):
-        games = []
-
-        database_games = Game.objects.all().values("name", "show_name", "max_players")
-
-        for game in database_games:
-            games.append(game)
-
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'games': games
         }))
 
     def disconnect(self, close_code):

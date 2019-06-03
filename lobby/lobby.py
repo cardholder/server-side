@@ -23,6 +23,12 @@ class Lobby:
 
         return False
 
+    def is_not_full(self):
+        if len(self.players) == self.max_players:
+            return True
+
+        return False
+
     def to_json(self):
         lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
                       "players": []}

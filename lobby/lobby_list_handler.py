@@ -58,16 +58,31 @@ def send_remove_lobby(lobby_id):
     )
 
 
+def send_lobby_is_full(lobby_id):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        lobby_id,
+        {"type": "lobby.full", "message": "Lobby ist voll!"},
+    )
+
+
 def add_player_to_lobby(lobby_id, name):
     lobby = lobby_list[str(lobby_id)]
+
+    if not lobby.is_not_full():
+        send_lobby_is_full(lobby_id)
+        return None
+
     player_id = lobby.get_highest_player_id_of_lobby()
     if player_id == 0:
         role = "leader"
     else:
         role = "player"
+
     player = Player(player_id, name, role)
     lobby.add_player(player)
     update_lobby(lobby_id)
+
     return lobby_id, player
 
 
@@ -94,7 +109,7 @@ def get_lobby_list_as_array_no_empty_rooms():
     lobby_arr = []
     for key, value in lobby_list.items():
         lobby = value
-        if lobby.is_not_empty():
+        if lobby.is_not_empty() and lobby.visibility == 'public' and lobby.is_not_full():
             lobby_arr.append(lobby.to_json())
 
     return lobby_arr

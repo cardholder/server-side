@@ -56,6 +56,7 @@ class LobbyCreateConsumer(WebsocketConsumer):
 
     def connect(self):
         self.accept()
+        self.send_game_options()
 
     # Receive message from WebSocket
     def receive(self, text_data):

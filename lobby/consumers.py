@@ -107,6 +107,7 @@ class LobbyConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         player_name = text_data_json['name']
+        print(str(self.player))
         if self.lobby_id is None:
             self.lobby_id, self.player = add_player_to_lobby(self.room_group_name, player_name)
 

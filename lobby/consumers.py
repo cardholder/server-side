@@ -105,8 +105,6 @@ class LobbyConsumer(WebsocketConsumer):
     # Receive message from room group
     def update_lobby(self, event):
         players = event['players']
-        print("\n\n\n\n")
-        print("Send Player Update")
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'players': players

@@ -61,7 +61,10 @@ def send_remove_lobby(lobby_id):
 def add_player_to_lobby(lobby_id, name):
     lobby = lobby_list[str(lobby_id)]
     player_id = lobby.get_highest_player_id_of_lobby()
-    role = "player"
+    if player_id == 0:
+        role = "leader"
+    else:
+        role = "player"
     player = Player(player_id, name, role)
     lobby.add_player(player)
     update_lobby(lobby_id)

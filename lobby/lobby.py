@@ -50,3 +50,8 @@ class Lobby:
                 player_id = player.id
         player_id = player_id + 1
         return player_id
+
+    def set_new_leader(self):
+        self.players[0].role = "leader"
+
+

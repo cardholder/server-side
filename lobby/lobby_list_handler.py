@@ -73,7 +73,11 @@ def add_player_to_lobby(lobby_id, name):
 
 def remove_player_from_lobby(lobby_id, player):
     lobby = lobby_list[str(lobby_id)]
+
     lobby.remove_player(player)
+    if player.is_leader():
+        lobby.set_new_leader()
+
     if len(lobby.players) == 0:
         remove_lobby(lobby_id)
         send_remove_lobby(lobby_id)

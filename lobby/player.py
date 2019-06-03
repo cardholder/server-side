@@ -11,3 +11,6 @@ class Player:
     def to_json(self):
         player_dict = {"id": self.id, "name": self.name, "role": self.role}
         return player_dict
+
+    def is_leader(self):
+        return self.role == "leader"

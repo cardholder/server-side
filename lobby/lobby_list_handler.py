@@ -113,3 +113,7 @@ def get_lobby_list_as_array_no_empty_rooms():
             lobby_arr.append(lobby.to_json())
 
     return lobby_arr
+
+
+def get_lobby(lobby_id):
+    return lobby_list[str(lobby_id)]

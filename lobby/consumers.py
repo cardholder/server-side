@@ -97,6 +97,7 @@ class LobbyConsumer(WebsocketConsumer):
 
         if self.lobby_id is None:
             self.lobby_id, self.player = add_player_to_lobby(self.room_group_name, player_name)
+            lobby = get_lobby(self.lobby_id)
 
     def disconnect(self, close_code):
         if self.lobby_id is not None:
@@ -119,3 +120,8 @@ class LobbyConsumer(WebsocketConsumer):
             'message': message
         }))
         self.disconnect(1000)
+
+    def send_lobby(self, lobby):
+        self.send(text_data=json.dumps({
+            'lobby': lobby.to_json()
+        }))

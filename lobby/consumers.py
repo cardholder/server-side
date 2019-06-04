@@ -110,7 +110,6 @@ class LobbyConsumer(WebsocketConsumer):
         players = event['players']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'id': int(self.player.id),
             'players': players
         }))
 
@@ -125,5 +124,6 @@ class LobbyConsumer(WebsocketConsumer):
 
     def send_lobby(self, lobby):
         self.send(text_data=json.dumps({
+            'your_id': int(self.player.id),
             'lobby': lobby.to_json()
         }))

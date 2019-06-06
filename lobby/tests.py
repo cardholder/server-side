@@ -3,6 +3,19 @@ from channels.testing import WebsocketCommunicator
 import pytest
 from channels.routing import URLRouter
 import lobby.routing
+from .player import Player
+from .lobby import Lobby
+
+
+class PlayerTests(TestCase):
+
+    def test_if_player_is_leader(self):
+        player = Player(1, "tester", "leader")
+        assert player.is_leader()
+
+    def test_if_player_is_not_leader(self):
+        player = Player(1, "tester", "player")
+        assert not player.is_leader()
 
 
 class LobbyTests(TestCase):
@@ -13,7 +26,6 @@ class LobbyTests(TestCase):
 
 
 class TestLobbyListConsumer(TestCase):
-
 
     @pytest.mark.asyncio
     async def test_get_connected_client(self):

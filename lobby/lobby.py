@@ -12,10 +12,14 @@ class Lobby:
         self.players = []
 
     def add_player(self, player):
-        self.players.append(player)
+        if len(self.players) < self.max_players:
+            self.players.append(player)
 
     def remove_player(self, player):
-        self.players.remove(player)
+        try:
+            self.players.remove(player)
+        except ValueError:
+            print("Player does not exist")
 
     def is_not_empty(self):
         if len(self.players) > 0:
@@ -29,13 +33,21 @@ class Lobby:
 
         return True
 
-    def to_json(self):
-        lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
-                      "players": []}
+    def get_highest_player_id_of_lobby(self):
+        player_id = -1
         for player in self.players:
-            lobby_dict["players"].append(player.to_json())
+            if player.id > player_id:
+                player_id = player.id
+        return player_id
 
-        return lobby_dict
+    def set_new_leader(self):
+        no_leader_in_lobby = True
+        for player in self.players:
+            if player.is_leader():
+                no_leader_in_lobby = False
+
+        if no_leader_in_lobby:
+            self.players[0].role = "leader"
 
     def players_to_json(self):
         player_arr = []
@@ -43,21 +55,10 @@ class Lobby:
             player_arr.append(player.to_json())
         return player_arr
 
-    def get_player_with_channel_layer(self, channel_layer):
+    def to_json(self):
+        lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
+                      "players": []}
         for player in self.players:
-            if player.channel_layer == channel_layer:
-                return player
-        return None
+            lobby_dict["players"].append(player.to_json())
 
-    def get_highest_player_id_of_lobby(self):
-        player_id = -1
-        for player in self.players:
-            if player.id > player_id:
-                player_id = player.id
-        player_id = player_id + 1
-        return player_id
-
-    def set_new_leader(self):
-        self.players[0].role = "leader"
-
-
+        return lobby_dict

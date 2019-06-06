@@ -75,6 +75,7 @@ def add_player_to_lobby(lobby_id, name):
         return None, None
 
     player_id = lobby.get_highest_player_id_of_lobby()
+    player_id = player_id + 1
     if player_id == 0:
         role = "leader"
     else:

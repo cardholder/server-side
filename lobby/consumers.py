@@ -94,6 +94,7 @@ class LobbyConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         key = list(text_data_json.keys())
+        print(str(key))
         if key[0] == "name":
 
             player_name = text_data_json['name']

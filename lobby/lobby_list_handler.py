@@ -63,7 +63,7 @@ def send_lobby_is_full(lobby_id):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         lobby_id,
-        {"type": "lobby.full", "message": "Lobby ist voll!"},
+        {"type": "lobby.full", "message": "Lobby is full!"},
     )
 
 

@@ -17,9 +17,9 @@ class LobbyListConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.accept()
-        self.send_lobbylist()
+        self.send_lobby_list()
 
-    def send_lobbylist(self):
+    def send_lobby_list(self):
         # Sends LobbyList to Client
         lobbies = get_lobby_list_as_array_no_empty_rooms()
         self.send(text_data=json.dumps({

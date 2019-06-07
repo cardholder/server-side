@@ -105,11 +105,6 @@ def remove_player_from_lobby(lobby_id, player):
         update_lobby(lobby_id)
 
 
-def get_players_of_lobby(lobby_id):
-    lobby = lobby_list[str(lobby_id)]
-    return lobby.players
-
-
 def get_lobby_list_as_array_no_empty_rooms():
     lobby_arr = []
     for key, value in lobby_list.items():

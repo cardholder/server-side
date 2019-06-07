@@ -3,9 +3,9 @@ from channels.testing import WebsocketCommunicator
 import pytest
 from channels.routing import URLRouter
 import lobby.routing
-from .lobby_list_handler import *
 from .lobby_list_handler import lobby_list
 import re
+from .consumers import *
 
 
 class PlayerTests(TestCase):
@@ -283,7 +283,7 @@ class TestLobbyListConsumer(TestCase):
 
         communicator = WebsocketCommunicator(application, "/lobbylist/")
         connected, sub_protocol = await communicator.connect()
-        assert connected
+        self.assertTrue(connected)
         await communicator.disconnect()
 
     @pytest.mark.asyncio
@@ -293,7 +293,22 @@ class TestLobbyListConsumer(TestCase):
         )
 
         communicator = WebsocketCommunicator(application, "/lobbylist/")
-        connected, sub_protocol = await communicator.connect()
+        await communicator.connect()
         response = await communicator.receive_from()
-        assert response == []
+        self.assertEqual(response, [])
         await communicator.disconnect()
+
+    @pytest.mark.asyncio
+    async def test_client_gets_lobby(self):
+        first_id = create_lobby("Durak", "public", 8)
+        application = URLRouter(
+            lobby.routing.websocket_urlpatterns
+        )
+
+        communicator = WebsocketCommunicator(application, "/lobbylist/")
+        await communicator.connect()
+        response = await communicator.receive_from()
+        print(response)
+        self.assertEqual(response, [{"message": "hallo"}])
+        await communicator.disconnect()
+        remove_lobby(first_id)

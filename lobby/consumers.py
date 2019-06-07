@@ -104,10 +104,8 @@ class LobbyConsumer(WebsocketConsumer):
                 if self.lobby_id is not None:
                     self.send_lobby(lobby)
         elif key[0] == 'player_id':
-            print(text_data_json['player_id'])
-            print(self.player.id)
-            if text_data_json['player_id'] == self.player.id:
-                self.send_kick_message()
+            player_id = text_data_json['player_id']
+            self.kick_player(player_id)
 
     def disconnect(self, close_code):
         if self.lobby_id is not None:
@@ -116,6 +114,16 @@ class LobbyConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
+        )
+
+    def kick_player(self, player_id):
+        # Send message to room group
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'send_kick',
+                'player_id': player_id
+            }
         )
 
     # Receive message from room group
@@ -141,7 +149,9 @@ class LobbyConsumer(WebsocketConsumer):
             'lobby': lobby.to_json()
         }))
 
-    def send_kick_message(self):
-        self.send(text_data=json.dumps({
-            'message': "You got kicked!"
-        }))
+    def send_kick(self, event):
+        player_id = event["player_id"]
+        if self.player.id == player_id:
+            self.send(text_data=json.dumps({
+                'message': "You got kicked!"
+            }))

@@ -94,7 +94,6 @@ class LobbyConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         key = list(text_data_json.keys())
-        print(str(key))
         if key[0] == "name":
 
             player_name = text_data_json['name']
@@ -104,10 +103,10 @@ class LobbyConsumer(WebsocketConsumer):
                 lobby = get_lobby(self.room_group_name)
                 if self.lobby_id is not None:
                     self.send_lobby(lobby)
-        elif key[0] == "player_id":
+        elif key[0] == 'player_id':
+            print(text_data_json['player_id'])
             if text_data_json['player_id'] == self.player.id:
                 self.send_kick_message()
-                self.disconnect(1000)
 
     def disconnect(self, close_code):
         if self.lobby_id is not None:

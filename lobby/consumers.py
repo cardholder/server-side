@@ -109,13 +109,13 @@ class LobbyConsumer(WebsocketConsumer):
                 self.disconnect(1000)
 
     def disconnect(self, close_code):
+        if self.lobby_id is not None:
+            remove_player_from_lobby(self.lobby_id, self.player)
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
-        if self.lobby_id is not None:
-            remove_player_from_lobby(self.lobby_id, self.player)
 
     # Receive message from room group
     def update_lobby(self, event):

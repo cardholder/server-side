@@ -105,6 +105,7 @@ class LobbyConsumer(WebsocketConsumer):
                     self.send_lobby(lobby)
         elif key[0] == 'player_id':
             print(text_data_json['player_id'])
+            print(self.player.id)
             if text_data_json['player_id'] == self.player.id:
                 self.send_kick_message()
 

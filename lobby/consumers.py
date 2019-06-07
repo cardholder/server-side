@@ -104,8 +104,9 @@ class LobbyConsumer(WebsocketConsumer):
                 if self.lobby_id is not None:
                     self.send_lobby(lobby)
         elif key[0] == "player_id":
-            self.send_kick_message()
-            self.disconnect(1000)
+            if text_data_json['player_id'] == self.player.id:
+                self.send_kick_message()
+                self.disconnect(1000)
 
     def disconnect(self, close_code):
         # Leave room group

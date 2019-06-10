@@ -7,6 +7,7 @@ class Player:
         self.id = int(player_id)
         self.name = name
         self.role = role
+        self.cards = []
 
     def to_json(self):
         player_dict = {"id": self.id, "name": self.name, "role": self.role}

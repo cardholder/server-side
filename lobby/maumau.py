@@ -30,6 +30,7 @@ class MauMau:
         self.current_draw_punishment = 1
 
         self.direction_clock_wise = True
+        self.card_wished = None
 
     def shuffle_cards(self):
         random.shuffle(self.cards)
@@ -41,7 +42,7 @@ class MauMau:
         if player in self.players:
             for i in range(0, card_number):
                 if len(self.cards) <= 0:
-                    self.shuffle_cards()
+                    self.shuffle_discard_pile_into_cards()
 
                 player.cards.append(self.cards.pop())
             self.current_draw_punishment = 1
@@ -49,6 +50,7 @@ class MauMau:
     def shuffle_discard_pile_into_cards(self):
         discard_card = self.discard_pile.pop()
         self.cards = copy.copy(self.discard_pile)
+        self.shuffle_cards()
         self.discard_pile = []
         self.discard_pile.append(discard_card)
 
@@ -56,6 +58,13 @@ class MauMau:
         top_card = self.discard_pile[len(self.discard_pile) - 1]
         if player in self.players:
 
+            if self.card_wished is not None:
+                if card.value == "B" or card.symbol == self.card_wished:
+                    self.discard_pile.append(card)
+                    self.check_card_action(card)
+                    return True
+                else:
+                    return False
             if top_card.value == "7" and self.current_draw_punishment > 1:
                 if card.value == "7":
                     self.discard_pile.append(card)

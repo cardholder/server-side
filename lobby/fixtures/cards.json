@@ -1,0 +1,418 @@
+[
+  {
+    "model": "lobby.card",
+    "pk": 1,
+    "fields": {
+      "value": "A",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 2,
+    "fields": {
+      "value": "A",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 3,
+    "fields": {
+      "value": "A",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 4,
+    "fields": {
+      "value": "A",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 7,
+    "fields": {
+      "value": "K",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 8,
+    "fields": {
+      "value": "K",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 9,
+    "fields": {
+      "value": "K",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 10,
+    "fields": {
+      "value": "K",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 11,
+    "fields": {
+      "value": "D",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 12,
+    "fields": {
+      "value": "D",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 13,
+    "fields": {
+      "value": "D",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 14,
+    "fields": {
+      "value": "D",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 15,
+    "fields": {
+      "value": "B",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 16,
+    "fields": {
+      "value": "B",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 17,
+    "fields": {
+      "value": "B",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 18,
+    "fields": {
+      "value": "B",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 19,
+    "fields": {
+      "value": "10",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 20,
+    "fields": {
+      "value": "10",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 21,
+    "fields": {
+      "value": "10",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 22,
+    "fields": {
+      "value": "10",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 23,
+    "fields": {
+      "value": "9",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 24,
+    "fields": {
+      "value": "9",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 25,
+    "fields": {
+      "value": "9",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 26,
+    "fields": {
+      "value": "9",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 27,
+    "fields": {
+      "value": "8",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 28,
+    "fields": {
+      "value": "8",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 29,
+    "fields": {
+      "value": "8",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 30,
+    "fields": {
+      "value": "8",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 31,
+    "fields": {
+      "value": "7",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 32,
+    "fields": {
+      "value": "7",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 33,
+    "fields": {
+      "value": "7",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 34,
+    "fields": {
+      "value": "7",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 35,
+    "fields": {
+      "value": "6",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 36,
+    "fields": {
+      "value": "6",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 37,
+    "fields": {
+      "value": "6",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 38,
+    "fields": {
+      "value": "6",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 39,
+    "fields": {
+      "value": "5",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 40,
+    "fields": {
+      "value": "5",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 41,
+    "fields": {
+      "value": "5",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 42,
+    "fields": {
+      "value": "5",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 43,
+    "fields": {
+      "value": "4",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 44,
+    "fields": {
+      "value": "4",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 45,
+    "fields": {
+      "value": "4",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 46,
+    "fields": {
+      "value": "4",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 47,
+    "fields": {
+      "value": "3",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 48,
+    "fields": {
+      "value": "3",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 49,
+    "fields": {
+      "value": "3",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 50,
+    "fields": {
+      "value": "3",
+      "symbol": "d"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 51,
+    "fields": {
+      "value": "2",
+      "symbol": "s"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 52,
+    "fields": {
+      "value": "2",
+      "symbol": "c"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 53,
+    "fields": {
+      "value": "2",
+      "symbol": "h"
+    }
+  },
+  {
+    "model": "lobby.card",
+    "pk": 54,
+    "fields": {
+      "value": "2",
+      "symbol": "d"
+    }
+  }
+]

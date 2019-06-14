@@ -120,7 +120,7 @@ class MauMau:
     def choose_next_player(self):
         player_index = self.players.index(self.current_player)
         if self.direction_clock_wise:
-            if player_index >= len(self.players):
+            if player_index >= len(self.players) - 1:
                 self.current_player = self.players[0]
             else:
                 self.current_player = self.players[player_index + 1]

@@ -422,14 +422,60 @@ class TestMauMau(TestCase):
         game.shuffle_discard_pile_into_cards()
         self.assertEqual(len(game.discard_pile), 1)
 
-    def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile_top_card_is_equal_as_before(self):
+    def test_choose_next_player_first_players_turn_clockwise(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
-        card_one = game.cards.pop()
-        card_two = game.cards.pop()
-        game.cards = []
-        game.discard_pile.append(card_one)
-        game.discard_pile.append(card_two)
-        game.shuffle_discard_pile_into_cards()
-        self.assertEqual(game.discard_pile[0], card_two)
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = game.players[0]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[1])
+
+    def test_choose_next_player_second_players_turn_clockwise(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = game.players[1]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[2])
+
+    def test_choose_next_player_third_players_turn_clockwise(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = game.players[2]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[0])
+
+    def test_choose_next_player_first_players_turn_counter_clockwise(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.direction_clock_wise = False
+        game.current_player = game.players[0]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[2])
+
+    def test_choose_next_player_second_players_turn_counter_clockwise(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.direction_clock_wise = False
+        game.current_player = game.players[1]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[0])
+
+    def test_choose_next_player_third_players_turn_counter_clockwise(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.direction_clock_wise = False
+        game.current_player = game.players[2]
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[1])
 

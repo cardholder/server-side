@@ -4,6 +4,7 @@ from .lobby_list_handler import lobby_list
 import re
 from .consumers import *
 from .maumau import MauMau
+from .models import Card
 
 
 class PlayerTests(TestCase):
@@ -522,3 +523,28 @@ class TestMauMau(TestCase):
         game.direction_clock_wise = False
         game.nine_punishment()
         self.assertTrue(game.direction_clock_wise)
+
+    def test_check_action_seven_card(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player, ])
+        card = Card.objects.get(value="7", symbol="c")
+        game.check_card_action(card)
+        self.assertEqual(game.current_draw_punishment, 2)
+
+    def test_check_action_eight_card(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = game.players[0]
+        card = Card.objects.get(value="8", symbol="c")
+        game.check_card_action(card)
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[2])
+
+    def test_check_action_nine_card(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player, ])
+        card = Card.objects.get(value="9", symbol="c")
+        game.check_card_action(card)
+        self.assertFalse(game.direction_clock_wise)

@@ -479,3 +479,46 @@ class TestMauMau(TestCase):
         game.choose_next_player()
         self.assertEqual(game.current_player, game.players[1])
 
+    def test_seven_punishment_once(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player])
+        game.seven_punishment()
+        self.assertEqual(game.current_draw_punishment, 2)
+
+    def test_seven_punishment_twice(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player])
+        game.seven_punishment()
+        game.seven_punishment()
+        self.assertEqual(game.current_draw_punishment, 4)
+
+    def test_seven_punishment_three_times(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player])
+        game.seven_punishment()
+        game.seven_punishment()
+        game.seven_punishment()
+        self.assertEqual(game.current_draw_punishment, 6)
+
+    def test_eight_punishment(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = game.players[0]
+        game.eight_punishment()
+        game.choose_next_player()
+        self.assertEqual(game.current_player, game.players[2])
+
+    def test_nine_punishment_clockwise(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player, ])
+        game.nine_punishment()
+        self.assertFalse(game.direction_clock_wise)
+
+    def test_nine_punishment_counter_clockwise(self):
+        player = Player(1, "test", "player")
+        game = MauMau([player, ])
+        game.direction_clock_wise = False
+        game.nine_punishment()
+        self.assertTrue(game.direction_clock_wise)

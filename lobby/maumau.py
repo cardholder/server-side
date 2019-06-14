@@ -8,11 +8,17 @@ import copy
 class MauMau:
 
     def __init__(self, players):
-        self.players = players
+        self.players = []
+        if isinstance(players, list):
+            for player in players:
+                self.players.append(player)
+        else:
+            self.players.append(players)
+
         players_len = len(self.players)
         self.current_player = None
         if players_len > 0:
-            self.current_player = self.players[random.randint(0, players_len)]
+            self.current_player = self.players[random.randint(0, players_len) - 1]
 
         # Get the cards of the game
         game = Game.objects.get(name="maumau")
@@ -42,8 +48,8 @@ class MauMau:
             for i in range(0, card_number):
                 if len(self.cards) <= 0:
                     self.shuffle_discard_pile_into_cards()
-
-                player.cards.append(self.cards.pop())
+                card = self.cards.pop()
+                player.cards.append(card)
             self.current_draw_punishment = 1
 
     def shuffle_discard_pile_into_cards(self):

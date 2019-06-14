@@ -1,7 +1,4 @@
 from django.test import TestCase
-from channels.testing import WebsocketCommunicator
-import pytest
-from channels.routing import URLRouter
 import lobby.routing
 from .lobby_list_handler import lobby_list
 import re
@@ -284,18 +281,28 @@ class TestMauMau(TestCase):
     fixtures = ['cards.json', 'cardsets.json', 'games.json']
 
     def test_initializing_game_test_card_size(self):
-        game = MauMau([])
-        self.assertEqual(len(game.cards), 51)
-        self.assertEqual(len(game.discard_pile), 1)
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(len(game.cards), 46)
 
     def test_initializing_game_players(self):
-        game = MauMau([])
-        self.assertEqual(game.players, [])
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(game.players, [player])
 
     def test_initializing_game_test_discard_pile_size(self):
-        game = MauMau([])
+        player = Player(1, "test", "player")
+        game = MauMau(player)
         self.assertEqual(len(game.discard_pile), 1)
 
-    def test_initializing_game_test_current_player_is_none(self):
-        game = MauMau([])
-        self.assertEqual(game.current_player, None)
+    def test_initializing_game_test_current_player_is_player(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(game.current_player, player)
+
+    def test_initializing_game_test_current_player_of_two_player(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test2", "player")
+        players = [player, player_two]
+        game = MauMau(players)
+        self.assertTrue(game.current_player in players)

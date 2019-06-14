@@ -25,6 +25,8 @@ class MauMau:
         card_set = CardSet.objects.get(id=game.card_set_id)
         self.cards = list(card_set.cards.all())
 
+        self.current_draw_punishment = 1
+
         self.shuffle_cards()
         for player in self.players:
             self.draw_cards(player, 5)
@@ -32,7 +34,6 @@ class MauMau:
         self.discard_pile = []
         self.discard_pile.append(self.cards.pop())
 
-        self.current_draw_punishment = 1
 
         self.direction_clock_wise = True
         self.card_wished = None
@@ -41,6 +42,9 @@ class MauMau:
         random.shuffle(self.cards)
 
     def draw_cards(self, player, card_number=1):
+        if self.current_draw_punishment == 0:
+            self.current_draw_punishment = 1
+
         if card_number == 1:
             card_number = self.current_draw_punishment
 

@@ -306,3 +306,75 @@ class TestMauMau(TestCase):
         players = [player, player_two]
         game = MauMau(players)
         self.assertTrue(game.current_player in players)
+
+    def test_initializing_game_two_players_card_size(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test2", "player")
+        players = [player, player_two]
+        game = MauMau(players)
+        self.assertEqual(len(game.cards), 41)
+
+    def test_initializing_game_direction(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertTrue(game.direction_clock_wise)
+
+    def test_initializing_game_draw_punishment(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(game.current_draw_punishment, 1)
+
+    def test_initializing_game_card_wished(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(game.card_wished, None)
+
+    def test_initializing_game_cards_of_player(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        self.assertEqual(len(game.players[0].cards), 5)
+
+    def test_initializing_game_cards_of_players(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test2", "player")
+        players = [player, player_two]
+        game = MauMau(players)
+        self.assertEqual(len(game.players[1].cards), 5)
+
+    def test_initializing_game_cards_of_players_equal(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test2", "player")
+        players = [player, player_two]
+        game = MauMau(players)
+        self.assertEqual(len(game.players[0].cards), len(game.players[1].cards))
+
+    def test_draw_cards(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.players[0].cards = []
+        game.draw_cards(player)
+        self.assertEqual(len(game.players[0].cards), 1)
+
+    def test_draw_two_cards(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.players[0].cards = []
+        game.draw_cards(player)
+        game.draw_cards(player)
+        self.assertEqual(len(game.players[0].cards), 2)
+
+    def test_draw_two_cards_with_punishment_is_two(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.players[0].cards = []
+        game.current_draw_punishment = 2
+        game.draw_cards(player)
+        self.assertEqual(len(game.players[0].cards), 2)
+
+    def test_draw_two_cards_with_punishment_is_zero(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.players[0].cards = []
+        game.current_draw_punishment = 0
+        game.draw_cards(player)
+        self.assertEqual(len(game.players[0].cards), 1)

@@ -378,3 +378,58 @@ class TestMauMau(TestCase):
         game.current_draw_punishment = 0
         game.draw_cards(player)
         self.assertEqual(len(game.players[0].cards), 1)
+
+    def test_shuffle_discard_pile_into_cards_not_empty_cards(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(len(game.cards), 46)
+
+    def test_shuffle_discard_pile_into_cards_empty_cards(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        game.cards = []
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(len(game.cards), 0)
+
+    def test_shuffle_discard_pile_into_cards_empty_cards_top_card_is_equal_as_before(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        card = game.discard_pile[0]
+        game.cards = []
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(game.discard_pile[0], card)
+
+    def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        card_one = game.cards.pop()
+        card_two = game.cards.pop()
+        game.cards = []
+        game.discard_pile.append(card_one)
+        game.discard_pile.append(card_two)
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(len(game.cards), 2)
+
+    def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile_size_of_discard_pile(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        card_one = game.cards.pop()
+        card_two = game.cards.pop()
+        game.cards = []
+        game.discard_pile.append(card_one)
+        game.discard_pile.append(card_two)
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(len(game.discard_pile), 1)
+
+    def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile_top_card_is_equal_as_before(self):
+        player = Player(1, "test", "player")
+        game = MauMau(player)
+        card_one = game.cards.pop()
+        card_two = game.cards.pop()
+        game.cards = []
+        game.discard_pile.append(card_one)
+        game.discard_pile.append(card_two)
+        game.shuffle_discard_pile_into_cards()
+        self.assertEqual(game.discard_pile[0], card_two)
+

@@ -6,6 +6,7 @@ import lobby.routing
 from .lobby_list_handler import lobby_list
 import re
 from .consumers import *
+from .maumau import MauMau
 
 
 class PlayerTests(TestCase):
@@ -101,7 +102,6 @@ class LobbyTests(TestCase):
         lobby_local.add_player(player)
         lobby_local.add_player(player_two)
         lobby_local.set_new_leader()
-        self.assertTrue(player.is_leader())
         self.assertFalse(player_two.is_leader())
 
     def test_new_leader_without_removing_the_leader_player_two_is_leader(self):
@@ -112,6 +112,14 @@ class LobbyTests(TestCase):
         lobby_local.add_player(player_two)
         lobby_local.set_new_leader()
         self.assertTrue(player_two.is_leader())
+
+    def test_new_leader_without_removing_the_leader_player_is_not_leader(self):
+        lobby_local = Lobby(1, "Durak", "public", 2)
+        player = Player(1, "tester", "player")
+        player_two = Player(2, "tester", "leader")
+        lobby_local.add_player(player)
+        lobby_local.add_player(player_two)
+        lobby_local.set_new_leader()
         self.assertFalse(player.is_leader())
 
     def test_new_leader_removing_the_leader(self):
@@ -272,43 +280,22 @@ class TestLobbyListHandler(TestCase):
         self.assertFalse(check_if_lobby_exists("test_id"))
 
 
-class TestLobbyListConsumer(TestCase):
+class TestMauMau(TestCase):
+    fixtures = ['cards.json', 'cardsets.json', 'games.json']
 
-    @pytest.mark.asyncio
-    async def test_get_connected_client(self):
+    def test_initializing_game_test_card_size(self):
+        game = MauMau([])
+        self.assertEqual(len(game.cards), 51)
+        self.assertEqual(len(game.discard_pile), 1)
 
-        application = URLRouter(
-            lobby.routing.websocket_urlpatterns
-        )
+    def test_initializing_game_players(self):
+        game = MauMau([])
+        self.assertEqual(game.players, [])
 
-        communicator = WebsocketCommunicator(application, "/lobbylist/")
-        connected, sub_protocol = await communicator.connect()
-        self.assertTrue(connected)
-        await communicator.disconnect()
+    def test_initializing_game_test_discard_pile_size(self):
+        game = MauMau([])
+        self.assertEqual(len(game.discard_pile), 1)
 
-    @pytest.mark.asyncio
-    async def test_client_gets_empty_lobby(self):
-        application = URLRouter(
-            lobby.routing.websocket_urlpatterns
-        )
-
-        communicator = WebsocketCommunicator(application, "/lobbylist/")
-        await communicator.connect()
-        response = await communicator.receive_from()
-        self.assertEqual(response, [])
-        await communicator.disconnect()
-
-    @pytest.mark.asyncio
-    async def test_client_gets_lobby(self):
-        first_id = create_lobby("Durak", "public", 8)
-        application = URLRouter(
-            lobby.routing.websocket_urlpatterns
-        )
-
-        communicator = WebsocketCommunicator(application, "/lobbylist/")
-        await communicator.connect()
-        response = await communicator.receive_from()
-        print(response)
-        self.assertEqual(response, [{"message": "hallo"}])
-        await communicator.disconnect()
-        remove_lobby(first_id)
+    def test_initializing_game_test_current_player_is_none(self):
+        game = MauMau([])
+        self.assertEqual(game.current_player, None)

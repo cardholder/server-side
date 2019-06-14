@@ -10,15 +10,14 @@ class MauMau:
     def __init__(self, players):
         self.players = players
         players_len = len(self.players)
-        self.current_player = self.players[random.randint(0, players_len)]
+        self.current_player = None
+        if players_len > 0:
+            self.current_player = self.players[random.randint(0, players_len)]
 
         # Get the cards of the game
-        game = Game.objects.filter(name="maumau")
-        card_set = CardSet.objects.filter(id=game[0].card_set_id)
-        cards = card_set.cards.all()
-        self.cards = []
-        for card in cards:
-            self.cards.append(card)
+        game = Game.objects.get(name="maumau")
+        card_set = CardSet.objects.get(id=game.card_set_id)
+        self.cards = list(card_set.cards.all())
 
         self.shuffle_cards()
         for player in self.players:
@@ -120,3 +119,6 @@ class MauMau:
                 self.current_player = self.players[len(self.players) - 1]
             else:
                 self.current_player = self.players[player_index - 1]
+
+    def get_length_of_cards(self):
+        return len(self.cards)

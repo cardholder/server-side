@@ -526,7 +526,7 @@ class TestMauMau(TestCase):
 
     def test_check_action_seven_card(self):
         player = Player(1, "test", "player")
-        game = MauMau([player, ])
+        game = MauMau([player])
         card = Card.objects.get(value="7", symbol="c")
         game.check_card_action(card)
         self.assertEqual(game.current_draw_punishment, 2)
@@ -544,7 +544,218 @@ class TestMauMau(TestCase):
 
     def test_check_action_nine_card(self):
         player = Player(1, "test", "player")
-        game = MauMau([player, ])
+        game = MauMau([player])
         card = Card.objects.get(value="9", symbol="c")
         game.check_card_action(card)
         self.assertFalse(game.direction_clock_wise)
+
+    def test_play_card_colour_on_colour(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="c")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+
+    def test_play_card_colour_on_colour_check_next_player(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="c")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player_two)
+
+    def test_play_card_value_on_value(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="3", symbol="s")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+
+    def test_play_card_value_on_value(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="3", symbol="s")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player_two)
+
+    def test_play_card_colour_on_seven(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="s")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertFalse(game.play_card(player, card_two))
+
+    def test_play_card_colour_on_seven_check_next_player(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="s")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertFalse(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player)
+
+    def test_play_card_seven_on_seven(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="7", symbol="c")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_draw_punishment, 4)
+
+    def test_play_card_seven_on_seven_check_next_player(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="7", symbol="c")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_draw_punishment, 4)
+        self.assertEqual(game.current_player, player_two)
+
+    def test_play_card_eight_on_seven(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="8", symbol="s")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_draw_punishment, 1)
+
+    def test_play_card_eight_on_seven_check_next_player(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="8", symbol="s")
+        game.current_draw_punishment = 2
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_draw_punishment, 1)
+        self.assertEqual(game.current_player, player_two)
+
+    def test_play_card_on_seven_no_punishment(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="s")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+
+    def test_play_card_seven_on_seven_no_punishment(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="7", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_draw_punishment, 2)
+
+    def test_play_card_eight_on_seven_no_punishment(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="7", symbol="s")
+        card_two = Card.objects.get(value="8", symbol="s")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player_three)
+
+    def test_play_card_eight_on_colour(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="s")
+        card_two = Card.objects.get(value="8", symbol="s")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player_three)
+
+    def test_play_card_nine_on_colour(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="s")
+        card_two = Card.objects.get(value="9", symbol="s")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.current_player, player_three)
+
+    def test_play_card_ten_on_colour(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="s")
+        card_two = Card.objects.get(value="10", symbol="s")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+
+    def test_play_card_ten_on_wrong_colour(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        player_three = Player(1, "test", "player")
+        game = MauMau([player, player_two, player_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="s")
+        card_two = Card.objects.get(value="10", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))

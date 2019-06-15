@@ -66,31 +66,16 @@ class MauMau:
     def play_card(self, player, card):
         top_card = self.discard_pile[len(self.discard_pile) - 1]
         if player in self.players:
+            if not player.has_card(card):
+                return False
 
             if self.card_wished is not None:
-                if card.value == "B" or card.symbol == self.card_wished:
-                    self.discard_pile.append(card)
-                    self.check_card_action(card)
-                    return True
-                else:
-                    return False
+                return self._play_wished_card(card)
+
             if top_card.value == "7" and self.current_draw_punishment > 1:
-                if card.value == "7":
-                    self.discard_pile.append(card)
-                    self.seven_punishment()
-                    return True
-                elif card.value == "8" and card.symbol == top_card.symbol:
-                    self.discard_pile.append(card)
-                    self.current_draw_punishment = 1
-                    return True
-                else:
-                    return False
-            elif card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
-                self.discard_pile.append(card)
-                self.check_card_action(card)
-                return True
-            else:
-                return False
+                return self._play_card_on_seven(card, top_card)
+
+            return self._play_normal_card(card, top_card)
 
     def check_card_action(self, card):
         if card.value == "7":
@@ -130,5 +115,35 @@ class MauMau:
             else:
                 self.current_player = self.players[player_index - 1]
 
-    def get_length_of_cards(self):
-        return len(self.cards)
+    def _play_card_on_seven(self, card, top_card):
+        if card.value == "7":
+            self.discard_pile.append(card)
+            self.seven_punishment()
+            self.choose_next_player()
+            return True
+        elif card.value == "8" and card.symbol == top_card.symbol:
+            self.discard_pile.append(card)
+            self.current_draw_punishment = 1
+            self.choose_next_player()
+            return True
+        else:
+            return False
+
+    def _play_wished_card(self, card):
+        if card.value == "B" or card.symbol == self.card_wished:
+            self.discard_pile.append(card)
+            self.check_card_action(card)
+            self.choose_next_player()
+            self.card_wished = None
+            return True
+        else:
+            return False
+
+    def _play_normal_card(self, card, top_card):
+        if card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
+            self.discard_pile.append(card)
+            self.check_card_action(card)
+            self.choose_next_player()
+            return True
+        else:
+            return False

@@ -15,3 +15,6 @@ class Player:
 
     def is_leader(self):
         return self.role == "leader"
+
+    def has_card(self, card):
+        return card in self.cards

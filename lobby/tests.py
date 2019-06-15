@@ -759,3 +759,14 @@ class TestMauMau(TestCase):
         game.discard_pile.append(card_one)
         player.cards.append(card_two)
         self.assertTrue(game.play_card(player, card_two))
+
+    def test_play_card_player_not_known(self):
+        player = Player(1, "test", "player")
+        player_two = Player(2, "test", "player")
+        game = MauMau([player])
+        game.current_player = player
+        card_one = Card.objects.get(value="2", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertFalse(game.play_card(player_two, card_two))

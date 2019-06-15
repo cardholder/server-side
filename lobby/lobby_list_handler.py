@@ -5,18 +5,19 @@ from .lobby import Lobby
 from .player import Player
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from .maumau import MauMau
 
 lobby_list = {}
 
 
-def create_lobby(game, visibility, max_players):
+def create_lobby(game_name, visibility, max_players):
     # generates a random id for new lobby
     lobby_id = generate_id()
     while check_if_lobby_exists(lobby_id):
         # generates a new lobby_id if it already exists
         lobby_id = generate_id()
 
-    lobby = Lobby(lobby_id, game, visibility, max_players)
+    lobby = Lobby(lobby_id, game_name, visibility, max_players)
     lobby_list[str(lobby_id)] = lobby
     return lobby_id
 
@@ -117,3 +118,42 @@ def get_lobby_list_as_array_no_empty_rooms():
 
 def get_lobby(lobby_id):
     return lobby_list[str(lobby_id)]
+
+
+def get_player_of_lobby(lobby_id, player_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        for player in lobby.players:
+            if player.id == player_id:
+                return Player
+    return None
+
+
+def start_game(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if lobby.game_name == "Mau Mau":
+            lobby.game = MauMau(lobby.players)
+
+
+def play_card_in_game(lobby_id, player, card):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if isinstance(lobby.game, MauMau):
+            return lobby.game.play_card(player, card)
+    return False
+
+
+def draw_card_in_game(lobby_id, player):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if isinstance(lobby.game, MauMau):
+            return lobby.game.draw_cards(player)
+    return False
+
+
+def get_card_size_of_mau_mau_game(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if isinstance(lobby.game, MauMau):
+            return len(lobby.game.cards)

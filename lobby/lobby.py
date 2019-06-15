@@ -4,12 +4,13 @@ from .player import Player
 
 class Lobby:
 
-    def __init__(self, lobby_id, game, visibility, max_players):
+    def __init__(self, lobby_id, game_name, visibility, max_players):
         self.id = lobby_id
-        self.game = game
+        self.game_name = game_name
         self.visibility = visibility
         self.max_players = int(max_players)
         self.players = []
+        self.game = None
 
     def add_player(self, player):
         if len(self.players) < self.max_players:
@@ -56,7 +57,7 @@ class Lobby:
         return player_arr
 
     def to_json(self):
-        lobby_dict = {"id": self.id, "game": self.game, "visibility": self.visibility, "max_players": self.max_players,
+        lobby_dict = {"id": self.id, "game": self.game_name, "visibility": self.visibility, "max_players": self.max_players,
                       "players": []}
         for player in self.players:
             lobby_dict["players"].append(player.to_json())

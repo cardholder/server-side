@@ -54,6 +54,8 @@ class MauMau:
                 card = self.cards.pop()
                 player.cards.append(card)
             self.current_draw_punishment = 1
+            return True
+        return False
 
     def shuffle_discard_pile_into_cards(self):
         if len(self.cards) <= 0:

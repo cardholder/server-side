@@ -1,0 +1,22 @@
+[
+  {
+    "model": "lobby.game",
+    "pk": 1,
+    "fields": {
+      "name": "AcesToAces",
+      "show_name": "Ace Ace",
+      "max_players": 5,
+      "card_set": 1
+    }
+  },
+  {
+    "model": "lobby.game",
+    "pk": 2,
+    "fields": {
+      "name": "maumau",
+      "show_name": "Mau Mau",
+      "max_players": 5,
+      "card_set": 2
+    }
+  }
+]

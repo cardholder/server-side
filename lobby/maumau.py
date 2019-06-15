@@ -8,17 +8,24 @@ import copy
 class MauMau:
 
     def __init__(self, players):
-        self.players = players
+        self.players = []
+        if isinstance(players, list):
+            for player in players:
+                self.players.append(player)
+        else:
+            self.players.append(players)
+
         players_len = len(self.players)
-        self.current_player = self.players[random.randint(0, players_len)]
+        self.current_player = None
+        if players_len > 0:
+            self.current_player = self.players[random.randint(0, players_len) - 1]
 
         # Get the cards of the game
-        game = Game.objects.filter(name="maumau")
-        card_set = CardSet.objects.filter(id=game[0].card_set_id)
-        cards = card_set.cards.all()
-        self.cards = []
-        for card in cards:
-            self.cards.append(card)
+        game = Game.objects.get(name="maumau")
+        card_set = CardSet.objects.get(id=game.card_set_id)
+        self.cards = list(card_set.cards.all())
+
+        self.current_draw_punishment = 1
 
         self.shuffle_cards()
         for player in self.players:
@@ -27,52 +34,48 @@ class MauMau:
         self.discard_pile = []
         self.discard_pile.append(self.cards.pop())
 
-        self.current_draw_punishment = 1
-
         self.direction_clock_wise = True
+        self.card_wished = None
 
     def shuffle_cards(self):
         random.shuffle(self.cards)
 
     def draw_cards(self, player, card_number=1):
+        if self.current_draw_punishment == 0:
+            self.current_draw_punishment = 1
+
         if card_number == 1:
             card_number = self.current_draw_punishment
 
         if player in self.players:
             for i in range(0, card_number):
                 if len(self.cards) <= 0:
-                    self.shuffle_cards()
-
-                player.cards.append(self.cards.pop())
+                    self.shuffle_discard_pile_into_cards()
+                card = self.cards.pop()
+                player.cards.append(card)
             self.current_draw_punishment = 1
 
     def shuffle_discard_pile_into_cards(self):
-        discard_card = self.discard_pile.pop()
-        self.cards = copy.copy(self.discard_pile)
-        self.discard_pile = []
-        self.discard_pile.append(discard_card)
+        if len(self.cards) <= 0:
+            discard_card = self.discard_pile.pop()
+            self.cards = copy.copy(self.discard_pile)
+            self.shuffle_cards()
+            self.discard_pile = []
+            self.discard_pile.append(discard_card)
 
     def play_card(self, player, card):
         top_card = self.discard_pile[len(self.discard_pile) - 1]
         if player in self.players:
+            if not player.has_card(card):
+                return False
+
+            if self.card_wished is not None:
+                return self._play_wished_card(card)
 
             if top_card.value == "7" and self.current_draw_punishment > 1:
-                if card.value == "7":
-                    self.discard_pile.append(card)
-                    self.seven_punishment()
-                    return True
-                elif card.value == "8" and card.symbol == top_card.symbol:
-                    self.discard_pile.append(card)
-                    self.current_draw_punishment = 1
-                    return True
-                else:
-                    return False
-            elif card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
-                self.discard_pile.append(card)
-                self.check_card_action(card)
-                return True
-            else:
-                return False
+                return self._play_card_on_seven(card, top_card)
+
+            return self._play_normal_card(card, top_card)
 
     def check_card_action(self, card):
         if card.value == "7":
@@ -102,7 +105,7 @@ class MauMau:
     def choose_next_player(self):
         player_index = self.players.index(self.current_player)
         if self.direction_clock_wise:
-            if player_index >= len(self.players):
+            if player_index >= len(self.players) - 1:
                 self.current_player = self.players[0]
             else:
                 self.current_player = self.players[player_index + 1]
@@ -111,3 +114,36 @@ class MauMau:
                 self.current_player = self.players[len(self.players) - 1]
             else:
                 self.current_player = self.players[player_index - 1]
+
+    def _play_card_on_seven(self, card, top_card):
+        if card.value == "7":
+            self.discard_pile.append(card)
+            self.seven_punishment()
+            self.choose_next_player()
+            return True
+        elif card.value == "8" and card.symbol == top_card.symbol:
+            self.discard_pile.append(card)
+            self.current_draw_punishment = 1
+            self.choose_next_player()
+            return True
+        else:
+            return False
+
+    def _play_wished_card(self, card):
+        if card.value == "B" or card.symbol == self.card_wished:
+            self.discard_pile.append(card)
+            self.check_card_action(card)
+            self.choose_next_player()
+            self.card_wished = None
+            return True
+        else:
+            return False
+
+    def _play_normal_card(self, card, top_card):
+        if card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
+            self.discard_pile.append(card)
+            self.check_card_action(card)
+            self.choose_next_player()
+            return True
+        else:
+            return False

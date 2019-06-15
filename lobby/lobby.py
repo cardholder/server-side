@@ -19,7 +19,7 @@ class Lobby:
         try:
             self.players.remove(player)
         except ValueError:
-            print("Player does not exist")
+            pass
 
     def is_not_empty(self):
         if len(self.players) > 0:

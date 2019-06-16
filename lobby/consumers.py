@@ -113,15 +113,6 @@ class LobbyConsumer(WebsocketConsumer):
                 start_game(self.lobby_id)
                 self.send_start_to_group()
 
-    def disconnect(self, close_code):
-        if self.lobby_id is not None:
-            remove_player_from_lobby(self.lobby_id, self.player)
-        # Leave room group
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-        )
-
     def send_start_to_group(self):
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -178,6 +169,17 @@ class LobbyConsumer(WebsocketConsumer):
             self.send(text_data=json.dumps({
                 'message': "You got kicked!"
             }))
+
+    def disconnect(self, close_code):
+        if self.lobby_id is not None:
+            lobby = get_lobby(self.lobby_id)
+            if lobby.game is None:
+                remove_player_from_lobby(self.lobby_id, self.player)
+        # Leave room group
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+        )
 
 
 class MauMauConsumer(WebsocketConsumer):

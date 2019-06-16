@@ -222,10 +222,6 @@ class MauMauConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    def play_card_for_player(self, card):
-        if self.player is not None:
-            play_card_in_game(self.room_group_name, self.player, card)
-
     def draw_card_for_player(self):
         if self.player is not None:
             cards_before_drawing = self.player.cards
@@ -262,6 +258,34 @@ class MauMauConsumer(WebsocketConsumer):
                 'player': player,
                 'card_amount': len(cards),
                 'remaining_cards': remaining_cards,
+                'current_player': current_player
+            }))
+
+    def play_card_for_player(self, card):
+        player_card = Card.objects.get(id=card.id)
+        if self.player is not None:
+            if play_card_in_game(self.room_group_name, self.player, player_card):
+                current_player = get_current_player(self.room_group_name)
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        'type': 'play_card',
+                        'card': player_card.to_json(),
+                        'player': self.player.to_json(),
+                        'current_player': current_player.to_json()
+                    }
+                )
+            else:
+                self.send_error_message()
+
+    def play_card(self, event):
+        player = event["player"]
+        card = event["card"]
+        current_player = event["current_player"]
+        if self.player.id == player.id:
+            self.send(text_data=json.dumps({
+                'player': player,
+                'card': card,
                 'current_player': current_player
             }))
 

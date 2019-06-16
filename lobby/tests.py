@@ -770,3 +770,42 @@ class TestMauMau(TestCase):
         game.discard_pile.append(card_one)
         player.cards.append(card_two)
         self.assertFalse(game.play_card(player_two, card_two))
+
+    def test_card_to_json(self):
+        card_one = Card.objects.get(value="A", symbol="c")
+        card_one_json = card_one.to_json
+        compare_json = {
+            "id": 1,
+            "value": "A",
+            "symbol": "s"
+        }
+        self.assertEqual(card_one_json, compare_json)
+
+    def test_card_to_json(self):
+        card_one = Card.objects.get(value="A", symbol="s")
+        card_one_json = card_one.to_json
+        compare_json = {
+            "id": 3,
+            "value": "A",
+            "symbol": "s"
+        }
+        self.assertEqual(card_one_json, compare_json)
+
+    def test_cards_to_json(self):
+        card_one = Card.objects.get(value="A", symbol="s")
+        card_two = Card.objects.get(value="A", symbol="c")
+        cards = [card_one, card_two]
+        compare_json = {"cards": [
+            {
+                "id": 3,
+                "value": "A",
+                "symbol": "s"
+            },
+            {
+                "id": 1,
+                "value": "A",
+                "symbol": "c"
+            }
+        ]}
+        self.assertEqual(MauMauConsumer.cards_to_json(cards), compare_json)
+

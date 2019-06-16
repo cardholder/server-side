@@ -8,6 +8,7 @@ class Card(models.Model):
     def __str__(self):
         return str(self.value) + str(self.symbol)
 
+    @property
     def to_json(self):
         card_dict = {"id": self.id, "value": self.value, "symbol": self.symbol}
         return card_dict

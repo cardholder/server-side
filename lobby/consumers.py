@@ -233,12 +233,14 @@ class MauMauConsumer(WebsocketConsumer):
                 cards_after_drawing = self.player.cards
                 cards = self.compare_cards(cards_before_drawing, cards_after_drawing)
                 cards_dict = self.cards_to_json(cards)
+                current_player = get_current_player(self.room_group_name)
                 async_to_sync(self.channel_layer.group_send)(
                     self.room_group_name,
                     {
                         'type': 'draw_card',
                         'cards': cards_dict,
-                        'player': self.player.to_json()
+                        'player': self.player.to_json(),
+                        'current_player': current_player.to_json()
                     }
                 )
             else:
@@ -247,19 +249,21 @@ class MauMauConsumer(WebsocketConsumer):
     def draw_card(self, event):
         player = event["player"]
         cards = event["cards"]
+        current_player = event["current_player"]
         remaining_cards = get_card_size_of_mau_mau_game(self.room_group_name)
         if self.player.id == player.id:
             self.send(text_data=json.dumps({
                 'cards': cards,
-                'remaining_cards': remaining_cards
+                'remaining_cards': remaining_cards,
+                'current_player': current_player
             }))
         else:
             self.send(text_data=json.dumps({
                 'player': player,
                 'card_amount': len(cards),
-                'remaining_cards': remaining_cards
+                'remaining_cards': remaining_cards,
+                'current_player': current_player
             }))
-
 
     def send_error_message(self):
         self.send(text_data=json.dumps({
@@ -273,8 +277,15 @@ class MauMauConsumer(WebsocketConsumer):
                 cards.append(card)
         return cards
 
-    def cards_to_json(self, cards):
-        cards_dict = {'cards': []}
+    @staticmethod
+    def cards_to_json(cards):
+        # id must be created so the cards key won't be deleted
+        cards_dict = {"id": 0, "cards": []}
+
         for card in cards:
-            cards_dict['cards'].append(card.to_json())
+            card_json = card.to_json
+            cards_dict["cards"].append(card_json)
+
+        # delete key after getting all cards
+        del cards_dict["id"]
         return cards_dict

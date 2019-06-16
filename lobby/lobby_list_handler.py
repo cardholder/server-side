@@ -157,3 +157,10 @@ def get_card_size_of_mau_mau_game(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
             return len(lobby.game.cards)
+
+
+def get_current_player(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if isinstance(lobby.game, MauMau):
+            return lobby.game.current_player

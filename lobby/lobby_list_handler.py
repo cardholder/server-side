@@ -110,7 +110,7 @@ def get_lobby_list_as_array_no_empty_rooms():
     lobby_arr = []
     for key, value in lobby_list.items():
         lobby = value
-        if lobby.is_not_empty() and lobby.visibility == 'public' and lobby.is_not_full():
+        if lobby.is_not_empty() and lobby.visibility == 'public' and lobby.is_not_full() and lobby.game is None:
             lobby_arr.append(lobby.to_json())
 
     return lobby_arr

@@ -151,7 +151,8 @@ class LobbyTests(TestCase):
         player_json = [{
                 "id": 1,
                 "name": "tester",
-                "role": "player"
+                "role": "player",
+                "card_amount": 0
             }]
         self.assertEqual(lobby_local.players_to_json(), player_json)
 
@@ -166,12 +167,14 @@ class LobbyTests(TestCase):
             {
                 "id": 1,
                 "name": "tester",
-                "role": "player"
+                "role": "player",
+                "card_amount": 0
             },
             {
                 "id": 2,
                 "name": "tester",
-                "role": "leader"
+                "role": "leader",
+                "card_amount": 0
             }
         ]
         self.assertEqual(lobby_local.players_to_json(), player_json)
@@ -200,7 +203,8 @@ class LobbyTests(TestCase):
                 {
                     "id": 1,
                     "name": "tester",
-                    "role": "player"
+                    "role": "player",
+                    "card_amount": 0
                 }
             ]
         }
@@ -221,12 +225,14 @@ class LobbyTests(TestCase):
                 {
                     "id": 1,
                     "name": "tester",
-                    "role": "player"
+                    "role": "player",
+                    "card_amount": 0
                 },
                 {
                     "id": 2,
                     "name": "tester",
-                    "role": "leader"
+                    "role": "leader",
+                    "card_amount": 0
                 }
             ]
         }

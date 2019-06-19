@@ -10,7 +10,7 @@ class Player:
         self.cards = []
 
     def to_json(self):
-        player_dict = {"id": self.id, "name": self.name, "role": self.role}
+        player_dict = {"id": self.id, "name": self.name, "role": self.role, "card_amount": len(self.cards)}
         return player_dict
 
     def is_leader(self):

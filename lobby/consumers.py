@@ -207,6 +207,8 @@ class MauMauConsumer(WebsocketConsumer):
             self.player = get_player_of_lobby(self.room_group_name, player_id)
             if self.player is None:
                 self.disconnect(1000)
+            else:
+                self.send_initialized_game()
 
         elif key[0] == "card":
             card = Card.objects.get()
@@ -315,3 +317,19 @@ class MauMauConsumer(WebsocketConsumer):
         # delete key after getting all cards
         del cards_dict["id"]
         return cards_dict
+
+    def send_initialized_game(self):
+        players = get_players_of_lobby(self.room_group_name)
+        players_json = []
+        cards_json = []
+        for player in players:
+            players_json.append(player.to_json())
+            if player == self.player:
+                cards = player.cards
+                cards_json = self.cards_to_json(cards)
+
+        self.send(text_data=json.dumps({
+            'players': players_json,
+            'cards': cards_json
+        }))
+        pass

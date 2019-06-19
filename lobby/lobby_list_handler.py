@@ -164,3 +164,12 @@ def get_current_player(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
             return lobby.game.current_player
+
+
+def get_players_of_lobby(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        players = []
+        for player in lobby.players:
+            players.append(player)
+        return players

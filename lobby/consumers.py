@@ -205,6 +205,7 @@ class MauMauConsumer(WebsocketConsumer):
         if key[0] == "player_id":
             player_id = text_data_json["player_id"]
             self.player = get_player_of_lobby(self.room_group_name, player_id)
+            print(self.player.to_json())
             if self.player is None:
                 self.disconnect(1000)
             else:

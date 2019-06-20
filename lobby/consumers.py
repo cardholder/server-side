@@ -209,7 +209,6 @@ class MauMauConsumer(WebsocketConsumer):
             if self.player is None:
                 self.disconnect(1000)
             else:
-                print(self.player.id)
                 self.send_initialized_game()
 
         elif key[0] == "card":
@@ -327,9 +326,6 @@ class MauMauConsumer(WebsocketConsumer):
         for player in players:
             players_json.append(player.to_json())
 
-            print("\n\n\n\n\n")
-            print(player.id)
-            print(self.player.id)
             if player.id == self.player.id:
                 cards = player.cards
                 cards_json = self.cards_to_json(cards)

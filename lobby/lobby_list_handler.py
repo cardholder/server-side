@@ -125,7 +125,7 @@ def get_player_of_lobby(lobby_id, player_id):
         lobby = lobby_list[str(lobby_id)]
         for player in lobby.players:
             if player.id == player_id:
-                return Player
+                return player
     return None
 
 

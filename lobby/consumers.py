@@ -296,11 +296,20 @@ class MauMauConsumer(WebsocketConsumer):
         player = event["player"]
         card = event["card"]
         current_player = event["current_player"]
-        self.send(text_data=json.dumps({
-            'player': player,
-            'card': card,
-            'current_player': current_player
-        }))
+        if self.player.id == player["id"]:
+            cards = self.player.cards
+            cards_json = self.cards_to_json(cards)
+            self.send(text_data=json.dumps({
+                'cards': cards_json,
+                'card': card,
+                'current_player': current_player
+            }))
+        else:
+            self.send(text_data=json.dumps({
+                'player': player,
+                'card': card,
+                'current_player': current_player
+            }))
 
     def send_error_message(self):
         self.send(text_data=json.dumps({

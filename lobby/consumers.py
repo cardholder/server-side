@@ -319,6 +319,14 @@ class MauMauConsumer(WebsocketConsumer):
         del cards_dict["id"]
         return cards_dict
 
+    def sort_player_list(self, players):
+        counter = 0
+        index = -1
+        for player in players:
+            if player.id == self.player.id:
+                index = counter
+            counter += 1
+
     def send_initialized_game(self):
         players = get_players_of_lobby(self.room_group_name)
         players_json = []

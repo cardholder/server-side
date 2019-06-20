@@ -41,6 +41,9 @@ class MauMau:
         random.shuffle(self.cards)
 
     def draw_cards(self, player, card_number=1):
+        if player != self.current_player:
+            return False
+
         if self.current_draw_punishment == 0:
             self.current_draw_punishment = 1
 
@@ -69,6 +72,9 @@ class MauMau:
         top_card = self.discard_pile[len(self.discard_pile) - 1]
         if player in self.players:
             if not player.has_card(card):
+                return False
+
+            if player != self.current_player:
                 return False
 
             if self.card_wished is not None:

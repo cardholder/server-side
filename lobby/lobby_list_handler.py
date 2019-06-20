@@ -121,6 +121,7 @@ def get_lobby(lobby_id):
 
 
 def get_player_of_lobby(lobby_id, player_id):
+    print(lobby_id)
     if check_if_lobby_exists(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         for player in lobby.players:

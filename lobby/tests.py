@@ -820,3 +820,13 @@ class TestMauMau(TestCase):
         self.assertTrue(game.play_card(player, card_two))
         self.assertFalse(card_two in player.cards)
 
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        card_one = Card.objects.get(value="3", symbol="s")
+        card_two = Card.objects.get(value="3", symbol="c")
+        card_three = Card.objects.get(value="3", symbol="d")
+        game = MauMau([player, player_two])
+        cards = MauMauConsumer.compare_cards([card_one, card_two], [card_one, card_two, card_three])
+        self.assertEqual(cards, [card_three])
+
+

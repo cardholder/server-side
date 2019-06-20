@@ -238,7 +238,7 @@ class MauMauConsumer(WebsocketConsumer):
 
     def draw_card_for_player(self):
         if self.player is not None:
-            cards_before_drawing = self.player.cards
+            cards_before_drawing = self.player.cards.copy()
             if draw_card_in_game(self.room_group_name, self.player):
                 cards_after_drawing = self.player.cards
                 cards = self.compare_cards(cards_before_drawing, cards_after_drawing)
@@ -316,7 +316,8 @@ class MauMauConsumer(WebsocketConsumer):
             'message': 'Nicht gültig!'
         }))
 
-    def compare_cards(self, cards_before_drawing, cards_after_drawing):
+    @staticmethod
+    def compare_cards(cards_before_drawing, cards_after_drawing):
         cards = []
         for card in cards_after_drawing:
             if card not in cards_before_drawing:

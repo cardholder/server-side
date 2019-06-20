@@ -202,6 +202,7 @@ class MauMauConsumer(WebsocketConsumer):
     # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        print(text_data_json)
         key = list(text_data_json.keys())
         if key[0] == "player_id":
             player_id = text_data_json["player_id"]

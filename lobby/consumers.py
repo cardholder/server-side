@@ -327,10 +327,22 @@ class MauMauConsumer(WebsocketConsumer):
                 index = counter
             counter += 1
 
+        sorted_player_list = []
+
+        for i in range(0, len(players)):
+            sorted_player_list.append(players[index])
+
+            index += 1
+            if index == len(players):
+                index = 0
+
+        return sorted_player_list
+
     def send_initialized_game(self):
         players = get_players_of_lobby(self.room_group_name)
         players_json = []
         cards_json = []
+        players = self.sort_player_list(players)
         for player in players:
             players_json.append(player.to_json())
 

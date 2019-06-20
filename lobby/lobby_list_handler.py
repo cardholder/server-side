@@ -148,7 +148,8 @@ def draw_card_in_game(lobby_id, player):
     if check_if_lobby_exists(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
-            return lobby.game.draw_cards(player)
+            if player == lobby.game.current_player:
+                return lobby.game.draw_cards(player)
     return False
 
 

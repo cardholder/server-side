@@ -41,8 +41,6 @@ class MauMau:
         random.shuffle(self.cards)
 
     def draw_cards(self, player, card_number=1):
-        if player != self.current_player:
-            return False
 
         if self.current_draw_punishment == 0:
             self.current_draw_punishment = 1

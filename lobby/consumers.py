@@ -309,15 +309,14 @@ class MauMauConsumer(WebsocketConsumer):
     @staticmethod
     def cards_to_json(cards):
         # id must be created so the cards key won't be deleted
-        cards_dict = {"id": 0, "cards": []}
+        cards_json = []
 
         for card in cards:
             card_json = card.to_json
-            cards_dict["cards"].append(card_json)
+            cards_json.append(card_json)
 
         # delete key after getting all cards
-        del cards_dict["id"]
-        return cards_dict
+        return cards_json
 
     def sort_player_list(self, players):
         counter = 0
@@ -354,7 +353,7 @@ class MauMauConsumer(WebsocketConsumer):
 
         self.send(text_data=json.dumps({
             'players': players_json,
-            'cards': cards_json,
+            "cards": cards_json,
             'current_player': current_player.to_json(),
             'remaining_cards': get_card_size_of_mau_mau_game(self.room_group_name)
         }))

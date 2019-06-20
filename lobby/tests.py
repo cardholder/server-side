@@ -806,3 +806,17 @@ class TestMauMau(TestCase):
         discard_card = game.get_top_discard_card()
         self.assertEqual(game.current_player, player_two)
         self.assertEqual(discard_card, card_two)
+
+    def test_play_card_player_has_played_card(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="3", symbol="s")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards = []
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertFalse(card_two in player.cards)
+

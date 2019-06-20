@@ -121,15 +121,15 @@ class MauMau:
         if card.value == "7":
             self.discard_pile.append(card)
             self.seven_punishment()
-            self.choose_next_player()
-            return True
         elif card.value == "8" and card.symbol == top_card.symbol:
             self.discard_pile.append(card)
             self.current_draw_punishment = 1
-            self.choose_next_player()
-            return True
         else:
             return False
+
+        self.remove_card_from_player(card, self.current_player)
+        self.choose_next_player()
+        return True
 
     def _play_wished_card(self, card):
         if card.value == "B" or card.symbol == self.card_wished:
@@ -145,6 +145,7 @@ class MauMau:
         if card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
             self.discard_pile.append(card)
             self.check_card_action(card)
+            self.remove_card_from_player(card, self.current_player)
             self.choose_next_player()
             return True
         else:
@@ -159,3 +160,8 @@ class MauMau:
             if len(player.cards) == 0:
                 return True
         return False
+
+    def remove_card_from_player(self, card, player):
+        if player in self.players:
+            if card in player.cards:
+                player.cards.remove(card)

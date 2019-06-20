@@ -174,6 +174,7 @@ def get_players_of_lobby(lobby_id):
             players.append(player)
         return players
 
+
 def get_discard_pile_card(lobby_id):
     if check_if_lobby_exists(lobby_id):
         lobby = lobby_list[str(lobby_id)]

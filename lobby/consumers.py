@@ -213,7 +213,7 @@ class MauMauConsumer(WebsocketConsumer):
 
         elif key[0] == "card":
             card = text_data_json["card"]
-            card = Card.objects.get(card.id)
+            card = Card.objects.get(card["id"])
             self.play_card_for_player(card)
             if check_if_won_mau_mau(self.room_group_name):
                 async_to_sync(self.channel_layer.group_send)(

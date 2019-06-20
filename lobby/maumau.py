@@ -149,8 +149,8 @@ class MauMau:
     def _play_normal_card(self, card, top_card):
         if card.value == top_card.value or card.symbol == top_card.symbol or card.value == "10":
             self.discard_pile.append(card)
-            self.check_card_action(card)
             self.remove_card_from_player(card, self.current_player)
+            self.check_card_action(card)
             self.choose_next_player()
             return True
         else:

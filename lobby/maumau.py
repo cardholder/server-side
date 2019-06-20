@@ -27,6 +27,7 @@ class MauMau:
 
         self.current_draw_punishment = 1
 
+        self.direction_clock_wise = True
         self.shuffle_cards()
         for player in self.players:
             self.draw_cards(player, 5)
@@ -34,7 +35,6 @@ class MauMau:
         self.discard_pile = []
         self.discard_pile.append(self.cards.pop())
 
-        self.direction_clock_wise = True
         self.card_wished = None
 
     def shuffle_cards(self):

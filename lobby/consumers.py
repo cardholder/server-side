@@ -263,7 +263,7 @@ class MauMauConsumer(WebsocketConsumer):
         remaining_cards = get_card_size_of_mau_mau_game(self.room_group_name)
         if self.player.id == player["id"]:
             self.send(text_data=json.dumps({
-                'cards': cards,
+                'cards_drawn': cards,
                 'remaining_cards': remaining_cards,
                 'current_player': current_player
             }))

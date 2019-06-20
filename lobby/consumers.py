@@ -355,7 +355,7 @@ class MauMauConsumer(WebsocketConsumer):
 
             if player.id == self.player.id:
                 cards = player.cards
-                cards_json = self.(cards)
+                cards_json = self.cards_to_json(cards)
 
         current_player = get_current_player(self.room_group_name)
         top_discard_card = get_discard_pile_card(self.room_group_name)

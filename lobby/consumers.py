@@ -276,7 +276,7 @@ class MauMauConsumer(WebsocketConsumer):
             }))
 
     def play_card_for_player(self, card):
-        player_card = Card.objects.get(id=card.id)
+        player_card = card
         if self.player is not None:
             if play_card_in_game(self.room_group_name, self.player, player_card):
                 current_player = get_current_player(self.room_group_name)
@@ -296,12 +296,11 @@ class MauMauConsumer(WebsocketConsumer):
         player = event["player"]
         card = event["card"]
         current_player = event["current_player"]
-        if self.player.id == player.id:
-            self.send(text_data=json.dumps({
-                'player': player,
-                'card': card,
-                'current_player': current_player
-            }))
+        self.send(text_data=json.dumps({
+            'player': player,
+            'card': card,
+            'current_player': current_player
+        }))
 
     def send_error_message(self):
         self.send(text_data=json.dumps({
@@ -356,7 +355,7 @@ class MauMauConsumer(WebsocketConsumer):
 
             if player.id == self.player.id:
                 cards = player.cards
-                cards_json = self.cards_to_json(cards)
+                cards_json = self.(cards)
 
         current_player = get_current_player(self.room_group_name)
         top_discard_card = get_discard_pile_card(self.room_group_name)

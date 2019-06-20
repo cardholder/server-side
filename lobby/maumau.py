@@ -55,6 +55,7 @@ class MauMau:
                 card = self.cards.pop()
                 player.cards.append(card)
             self.current_draw_punishment = 1
+            self.choose_next_player()
             return True
         return False
 

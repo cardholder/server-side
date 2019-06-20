@@ -112,6 +112,7 @@ class LobbyConsumer(WebsocketConsumer):
             if message == "start":
                 start_game(self.lobby_id)
                 self.send_start_to_group()
+                send_remove_lobby(self.room_group_name)
 
     def send_start_to_group(self):
         # Send message to room group
@@ -209,7 +210,6 @@ class MauMauConsumer(WebsocketConsumer):
                 self.disconnect(1000)
             else:
                 self.send_initialized_game()
-                print(self.player.to_json())
 
         elif key[0] == "card":
             card = Card.objects.get()

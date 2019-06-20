@@ -179,5 +179,5 @@ def get_discard_pile_card(lobby_id):
     if check_if_lobby_exists(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
-            discard_pile = lobby.game.discard_pile
-            return discard_pile[len(discard_pile) - 1]
+            discard_card = lobby.game.get_top_discard_card()
+            return discard_card

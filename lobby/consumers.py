@@ -350,13 +350,12 @@ class MauMauConsumer(WebsocketConsumer):
                 cards_json = self.cards_to_json(cards)
 
         current_player = get_current_player(self.room_group_name)
-        card_discard = get_discard_pile_card(self.room_group_name)
-        print(card_discard)
+        top_discard_card = get_discard_pile_card(self.room_group_name)
 
         self.send(text_data=json.dumps({
             'players': players_json,
             'cards': cards_json,
             'current_player': current_player.to_json(),
             'remaining_cards': get_card_size_of_mau_mau_game(self.room_group_name),
-            'top_card_of_discard_pile': card_discard.to_json()
+            'top_card_of_discard_pile': top_discard_card.to_json()
         }))

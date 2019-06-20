@@ -149,3 +149,7 @@ class MauMau:
             return True
         else:
             return False
+
+    def get_top_discard_card(self):
+        discard_pile_index = len(self.discard_pile) - 1
+        return self.discard_pile[discard_pile_index]

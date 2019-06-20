@@ -589,18 +589,6 @@ class TestMauMau(TestCase):
         player.cards.append(card_two)
         self.assertTrue(game.play_card(player, card_two))
 
-    def test_play_card_value_on_value(self):
-        player = Player(1, "test", "player")
-        player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
-        game.current_player = player
-        card_one = Card.objects.get(value="3", symbol="s")
-        card_two = Card.objects.get(value="3", symbol="c")
-        game.discard_pile.append(card_one)
-        player.cards.append(card_two)
-        self.assertTrue(game.play_card(player, card_two))
-        self.assertEqual(game.current_player, player_two)
-
     def test_play_card_colour_on_seven(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
@@ -783,17 +771,7 @@ class TestMauMau(TestCase):
         compare_json = {
             "id": 1,
             "value": "A",
-            "symbol": "s"
-        }
-        self.assertEqual(card_one_json, compare_json)
-
-    def test_card_to_json(self):
-        card_one = Card.objects.get(value="A", symbol="s")
-        card_one_json = card_one.to_json
-        compare_json = {
-            "id": 3,
-            "value": "A",
-            "symbol": "s"
+            "symbol": "c"
         }
         self.assertEqual(card_one_json, compare_json)
 
@@ -813,5 +791,18 @@ class TestMauMau(TestCase):
                 "symbol": "c"
             }
         ]}
-        self.assertEqual(MauMauConsumer.cards_to_json(cards), compare_json)
+        self.assertEqual({"cards": MauMauConsumer.cards_to_json(cards)}, compare_json)
 
+    def test_play_card_value_on_value_check_discard_card(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau([player, player_two])
+        game.current_player = player
+        card_one = Card.objects.get(value="3", symbol="s")
+        card_two = Card.objects.get(value="3", symbol="c")
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        discard_card = game.get_top_discard_card()
+        self.assertEqual(game.current_player, player_two)
+        self.assertEqual(discard_card, card_two)

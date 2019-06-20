@@ -284,7 +284,7 @@ class MauMauConsumer(WebsocketConsumer):
                     self.room_group_name,
                     {
                         'type': 'play_card',
-                        'card': player_card.to_json(),
+                        'card': player_card.to_json,
                         'player': self.player.to_json(),
                         'current_player': current_player.to_json()
                     }

@@ -173,3 +173,10 @@ def get_players_of_lobby(lobby_id):
         for player in lobby.players:
             players.append(player)
         return players
+
+def get_discard_pile_card(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        if isinstance(lobby.game, MauMau):
+            discard_pile = lobby.game.discard_pile
+            return discard_pile[len(discard_pile) - 1]

@@ -212,8 +212,17 @@ class MauMauConsumer(WebsocketConsumer):
                 self.send_initialized_game()
 
         elif key[0] == "card":
-            card = Card.objects.get()
+            card = text_data_json["card"]
+            card = Card.objects.get(card.id)
             self.play_card_for_player(card)
+            if check_if_won_mau_mau(self.room_group_name):
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        'type': 'send_winner',
+                        'player_id': self.player.id
+                    }
+                )
         elif key[0] == "player":
             self.draw_card_for_player()
 
@@ -358,4 +367,11 @@ class MauMauConsumer(WebsocketConsumer):
             'current_player': current_player.to_json(),
             'remaining_cards': get_card_size_of_mau_mau_game(self.room_group_name),
             'top_card_of_discard_pile': top_discard_card.to_json
+        }))
+
+    def send_winner(self, event):
+        player_id = event["player_id"]
+        self.send(text_data=json.dumps({
+            'message': "Sieger",
+            'player_id': player_id
         }))

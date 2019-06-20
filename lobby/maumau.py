@@ -153,3 +153,9 @@ class MauMau:
     def get_top_discard_card(self):
         discard_pile_index = len(self.discard_pile) - 1
         return self.discard_pile[discard_pile_index]
+
+    def won_game(self):
+        for player in self.players:
+            if len(player.cards) == 0:
+                return True
+        return False

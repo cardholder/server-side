@@ -203,28 +203,31 @@ class MauMauConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         key = list(text_data_json.keys())
-        if key[0] == "player_id":
-            player_id = text_data_json["player_id"]
-            self.player = get_player_of_lobby(self.room_group_name, player_id)
-            if self.player is None:
-                self.disconnect(1000)
-            else:
-                self.send_initialized_game()
+        try:
+            if key[0] == "player_id":
+                player_id = text_data_json["player_id"]
+                self.player = get_player_of_lobby(self.room_group_name, player_id)
+                if self.player is None:
+                    self.disconnect(1000)
+                else:
+                    self.send_initialized_game()
 
-        elif key[0] == "card":
-            card = text_data_json["card"]
-            card = Card.objects.get(id=card["id"])
-            self.play_card_for_player(card)
-            if check_if_won_mau_mau(self.room_group_name):
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        'type': 'send_winner',
-                        'player_id': self.player.id
-                    }
-                )
-        elif key[0] == "player":
-            self.draw_card_for_player()
+            elif key[0] == "card":
+                card = text_data_json["card"]
+                card = Card.objects.get(id=card["id"])
+                self.play_card_for_player(card)
+                if check_if_won_mau_mau(self.room_group_name):
+                    async_to_sync(self.channel_layer.group_send)(
+                        self.room_group_name,
+                        {
+                            'type': 'send_winner',
+                            'player_id': self.player.id
+                        }
+                    )
+            elif key[0] == "player":
+                self.draw_card_for_player()
+        except IndexError as e:
+            print(e)
 
     def disconnect(self, close_code):
         if self.lobby_id is not None:

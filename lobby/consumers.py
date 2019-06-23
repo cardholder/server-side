@@ -301,13 +301,13 @@ class MauMauConsumer(WebsocketConsumer):
             cards_json = self.cards_to_json(cards)
             self.send(text_data=json.dumps({
                 'cards': cards_json,
-                'card': card,
+                'top_card_of_discard_pile': card,
                 'current_player': current_player
             }))
         else:
             self.send(text_data=json.dumps({
                 'player': player,
-                'card': card,
+                'top_card_of_discard_pile': card,
                 'current_player': current_player
             }))
 

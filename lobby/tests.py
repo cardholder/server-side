@@ -289,82 +289,82 @@ class TestMauMau(TestCase):
 
     def test_initializing_game_test_card_size(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(len(game.cards), 46)
 
     def test_initializing_game_players(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(game.players, [player])
 
     def test_initializing_game_test_discard_pile_size(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(len(game.discard_pile), 1)
 
     def test_initializing_game_test_current_player_is_player(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(game.current_player, player)
 
     def test_initializing_game_test_current_player_of_two_player(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test2", "player")
         players = [player, player_two]
-        game = MauMau(players)
+        game = MauMau("lobby", players)
         self.assertTrue(game.current_player in players)
 
     def test_initializing_game_two_players_card_size(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test2", "player")
         players = [player, player_two]
-        game = MauMau(players)
+        game = MauMau("lobby", players)
         self.assertEqual(len(game.cards), 41)
 
     def test_initializing_game_direction(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertTrue(game.direction_clock_wise)
 
     def test_initializing_game_draw_punishment(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(game.current_draw_punishment, 1)
 
     def test_initializing_game_card_wished(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(game.card_wished, None)
 
     def test_initializing_game_cards_of_player(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         self.assertEqual(len(game.players[0].cards), 5)
 
     def test_initializing_game_cards_of_players(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test2", "player")
         players = [player, player_two]
-        game = MauMau(players)
+        game = MauMau("lobby", players)
         self.assertEqual(len(game.players[1].cards), 5)
 
     def test_initializing_game_cards_of_players_equal(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test2", "player")
         players = [player, player_two]
-        game = MauMau(players)
+        game = MauMau("lobby", players)
         self.assertEqual(len(game.players[0].cards), len(game.players[1].cards))
 
     def test_draw_cards(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.players[0].cards = []
         game.draw_cards(player)
         self.assertEqual(len(game.players[0].cards), 1)
 
     def test_draw_two_cards(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.players[0].cards = []
         game.draw_cards(player)
         game.draw_cards(player)
@@ -372,7 +372,7 @@ class TestMauMau(TestCase):
 
     def test_draw_two_cards_with_punishment_is_two(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.players[0].cards = []
         game.current_draw_punishment = 2
         game.draw_cards(player)
@@ -380,7 +380,7 @@ class TestMauMau(TestCase):
 
     def test_draw_two_cards_with_punishment_is_zero(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.players[0].cards = []
         game.current_draw_punishment = 0
         game.draw_cards(player)
@@ -388,20 +388,20 @@ class TestMauMau(TestCase):
 
     def test_shuffle_discard_pile_into_cards_not_empty_cards(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.shuffle_discard_pile_into_cards()
         self.assertEqual(len(game.cards), 46)
 
     def test_shuffle_discard_pile_into_cards_empty_cards(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         game.cards = []
         game.shuffle_discard_pile_into_cards()
         self.assertEqual(len(game.cards), 0)
 
     def test_shuffle_discard_pile_into_cards_empty_cards_top_card_is_equal_as_before(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         card = game.discard_pile[0]
         game.cards = []
         game.shuffle_discard_pile_into_cards()
@@ -409,7 +409,7 @@ class TestMauMau(TestCase):
 
     def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         card_one = game.cards.pop()
         card_two = game.cards.pop()
         game.cards = []
@@ -420,7 +420,7 @@ class TestMauMau(TestCase):
 
     def test_shuffle_discard_pile_into_cards_empty_cards_three_cards_in_discard_pile_size_of_discard_pile(self):
         player = Player(1, "test", "player")
-        game = MauMau(player)
+        game = MauMau("lobby", player)
         card_one = game.cards.pop()
         card_two = game.cards.pop()
         game.cards = []
@@ -433,7 +433,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = game.players[0]
         game.choose_next_player()
         self.assertEqual(game.current_player, game.players[1])
@@ -442,7 +442,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = game.players[1]
         game.choose_next_player()
         self.assertEqual(game.current_player, game.players[2])
@@ -451,7 +451,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = game.players[2]
         game.choose_next_player()
         self.assertEqual(game.current_player, game.players[0])
@@ -460,7 +460,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.direction_clock_wise = False
         game.current_player = game.players[0]
         game.choose_next_player()
@@ -470,7 +470,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.direction_clock_wise = False
         game.current_player = game.players[1]
         game.choose_next_player()
@@ -480,7 +480,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.direction_clock_wise = False
         game.current_player = game.players[2]
         game.choose_next_player()
@@ -488,20 +488,20 @@ class TestMauMau(TestCase):
 
     def test_seven_punishment_once(self):
         player = Player(1, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         game.seven_punishment()
         self.assertEqual(game.current_draw_punishment, 2)
 
     def test_seven_punishment_twice(self):
         player = Player(1, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         game.seven_punishment()
         game.seven_punishment()
         self.assertEqual(game.current_draw_punishment, 4)
 
     def test_seven_punishment_three_times(self):
         player = Player(1, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         game.seven_punishment()
         game.seven_punishment()
         game.seven_punishment()
@@ -511,7 +511,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = game.players[0]
         game.eight_punishment()
         game.choose_next_player()
@@ -519,20 +519,20 @@ class TestMauMau(TestCase):
 
     def test_nine_punishment_clockwise(self):
         player = Player(1, "test", "player")
-        game = MauMau([player, ])
+        game = MauMau("lobby", [player, ])
         game.nine_punishment()
         self.assertFalse(game.direction_clock_wise)
 
     def test_nine_punishment_counter_clockwise(self):
         player = Player(1, "test", "player")
-        game = MauMau([player, ])
+        game = MauMau("lobby", [player, ])
         game.direction_clock_wise = False
         game.nine_punishment()
         self.assertTrue(game.direction_clock_wise)
 
     def test_check_action_seven_card(self):
         player = Player(1, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         card = Card.objects.get(value="7", symbol="c")
         game.check_card_action(card)
         self.assertEqual(game.current_draw_punishment, 2)
@@ -541,7 +541,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = game.players[0]
         card = Card.objects.get(value="8", symbol="c")
         game.check_card_action(card)
@@ -550,7 +550,7 @@ class TestMauMau(TestCase):
 
     def test_check_action_nine_card(self):
         player = Player(1, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         card = Card.objects.get(value="9", symbol="c")
         game.check_card_action(card)
         self.assertFalse(game.direction_clock_wise)
@@ -558,7 +558,7 @@ class TestMauMau(TestCase):
     def test_play_card_colour_on_colour(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="c")
         card_two = Card.objects.get(value="3", symbol="c")
@@ -569,7 +569,7 @@ class TestMauMau(TestCase):
     def test_play_card_colour_on_colour_check_next_player(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="c")
         card_two = Card.objects.get(value="3", symbol="c")
@@ -581,7 +581,7 @@ class TestMauMau(TestCase):
     def test_play_card_value_on_value(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="3", symbol="s")
         card_two = Card.objects.get(value="3", symbol="c")
@@ -592,7 +592,7 @@ class TestMauMau(TestCase):
     def test_play_card_colour_on_seven(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="2", symbol="s")
@@ -604,7 +604,7 @@ class TestMauMau(TestCase):
     def test_play_card_colour_on_seven_check_next_player(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="2", symbol="s")
@@ -617,7 +617,7 @@ class TestMauMau(TestCase):
     def test_play_card_seven_on_seven(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="7", symbol="c")
@@ -630,7 +630,7 @@ class TestMauMau(TestCase):
     def test_play_card_seven_on_seven_check_next_player(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="7", symbol="c")
@@ -644,7 +644,7 @@ class TestMauMau(TestCase):
     def test_play_card_eight_on_seven(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="8", symbol="s")
@@ -657,7 +657,7 @@ class TestMauMau(TestCase):
     def test_play_card_eight_on_seven_check_next_player(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="8", symbol="s")
@@ -671,7 +671,7 @@ class TestMauMau(TestCase):
     def test_play_card_on_seven_no_punishment(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="2", symbol="s")
@@ -682,7 +682,7 @@ class TestMauMau(TestCase):
     def test_play_card_seven_on_seven_no_punishment(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="7", symbol="c")
@@ -695,7 +695,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = player
         card_one = Card.objects.get(value="7", symbol="s")
         card_two = Card.objects.get(value="8", symbol="s")
@@ -708,7 +708,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="s")
         card_two = Card.objects.get(value="8", symbol="s")
@@ -721,7 +721,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="s")
         card_two = Card.objects.get(value="9", symbol="s")
@@ -734,7 +734,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="s")
         card_two = Card.objects.get(value="10", symbol="s")
@@ -746,7 +746,7 @@ class TestMauMau(TestCase):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
         player_three = Player(1, "test", "player")
-        game = MauMau([player, player_two, player_three])
+        game = MauMau("lobby", [player, player_two, player_three])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="s")
         card_two = Card.objects.get(value="10", symbol="c")
@@ -757,13 +757,36 @@ class TestMauMau(TestCase):
     def test_play_card_player_not_known(self):
         player = Player(1, "test", "player")
         player_two = Player(2, "test", "player")
-        game = MauMau([player])
+        game = MauMau("lobby", [player])
         game.current_player = player
         card_one = Card.objects.get(value="2", symbol="s")
         card_two = Card.objects.get(value="2", symbol="c")
         game.discard_pile.append(card_one)
         player.cards.append(card_two)
         self.assertFalse(game.play_card(player_two, card_two))
+
+    def test_play_card_card_wished(self):
+        player = Player(1, "test", "player")
+        game = MauMau("lobby", [player])
+        game.current_player = player
+        card_one = Card.objects.get(value="B", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="c")
+        game.card_wished = "c"
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+
+    def test_card_wished_is_none(self):
+        player = Player(1, "test", "player")
+        game = MauMau("lobby", [player])
+        game.current_player = player
+        card_one = Card.objects.get(value="B", symbol="s")
+        card_two = Card.objects.get(value="2", symbol="c")
+        game.card_wished = "c"
+        game.discard_pile.append(card_one)
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))
+        self.assertEqual(game.card_wished, None)
 
     def test_card_to_json(self):
         card_one = Card.objects.get(value="A", symbol="c")
@@ -796,7 +819,7 @@ class TestMauMau(TestCase):
     def test_play_card_value_on_value_check_discard_card(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="3", symbol="s")
         card_two = Card.objects.get(value="3", symbol="c")
@@ -810,7 +833,7 @@ class TestMauMau(TestCase):
     def test_play_card_player_has_played_card(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         game.current_player = player
         card_one = Card.objects.get(value="3", symbol="s")
         card_two = Card.objects.get(value="3", symbol="c")
@@ -825,8 +848,6 @@ class TestMauMau(TestCase):
         card_one = Card.objects.get(value="3", symbol="s")
         card_two = Card.objects.get(value="3", symbol="c")
         card_three = Card.objects.get(value="3", symbol="d")
-        game = MauMau([player, player_two])
+        game = MauMau("lobby", [player, player_two])
         cards = MauMauConsumer.compare_cards([card_one, card_two], [card_one, card_two, card_three])
         self.assertEqual(cards, [card_three])
-
-

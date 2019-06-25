@@ -3,12 +3,15 @@ import random
 from .models import *
 from .player import Player
 import copy
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class MauMau:
 
-    def __init__(self, players):
+    def __init__(self, lobby_id, players):
         self.players = []
+        self.lobby_id = lobby_id
         if isinstance(players, list):
             for player in players:
                 self.players.append(player)
@@ -36,6 +39,7 @@ class MauMau:
         self.discard_pile.append(self.cards.pop())
 
         self.card_wished = None
+        self.wait_for_card_wish = False
 
     def shuffle_cards(self):
         random.shuffle(self.cards)
@@ -69,7 +73,7 @@ class MauMau:
 
     def play_card(self, player, card):
         top_card = self.discard_pile[len(self.discard_pile) - 1]
-        if player in self.players:
+        if player in self.players and not self.wait_for_card_wish:
             if not player.has_card(card):
                 return False
 
@@ -83,6 +87,7 @@ class MauMau:
                 return self._play_card_on_seven(card, top_card)
 
             return self._play_normal_card(card, top_card)
+        return False
 
     def check_card_action(self, card):
         if card.value == "7":
@@ -107,7 +112,12 @@ class MauMau:
         self.direction_clock_wise = not self.direction_clock_wise
 
     def jack_wish(self):
-        pass
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            self.lobby_id,
+            {"type": "jack.wish", "player": self.current_player.to_json()},
+        )
+        self.wait_for_card_wish = True
 
     def choose_next_player(self):
         player_index = self.players.index(self.current_player)
@@ -151,10 +161,10 @@ class MauMau:
             self.discard_pile.append(card)
             self.remove_card_from_player(card, self.current_player)
             self.check_card_action(card)
-            self.choose_next_player()
+            if not self.wait_for_card_wish:
+                self.choose_next_player()
             return True
-        else:
-            return False
+        return False
 
     def get_top_discard_card(self):
         discard_pile_index = len(self.discard_pile) - 1
@@ -163,6 +173,7 @@ class MauMau:
     def won_game(self):
         for player in self.players:
             if len(player.cards) == 0:
+
                 return True
         return False
 
@@ -170,3 +181,12 @@ class MauMau:
         if player in self.players:
             if card in player.cards:
                 player.cards.remove(card)
+
+    def make_card_wish(self, colour, player):
+        if player == self.current_player:
+            if colour in "s c h d":
+                self.wait_for_card_wish = False
+                self.card_wished = colour
+                self.choose_next_player()
+                return True
+        return False

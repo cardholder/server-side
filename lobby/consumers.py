@@ -227,9 +227,9 @@ class MauMauConsumer(WebsocketConsumer):
                     )
             elif key[0] == "player":
                 self.draw_card_for_player()
-            elif key[0] == "colour":
-                colour = text_data_json["symbol"]
-                self.wish_card(colour)
+            elif key[0] == "symbol":
+                symbol = text_data_json["symbol"]
+                self.wish_card(symbol)
         except IndexError as e:
             print(e)
 

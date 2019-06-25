@@ -262,11 +262,12 @@ class MauMauConsumer(WebsocketConsumer):
             else:
                 self.send_error_message()
 
-    def wish_card(self, colour):
-        if wish_card_in_mau_mau(self.room_group_name, self.player, colour):
+    def wish_card(self, symbol):
+        if wish_card_in_mau_mau(self.room_group_name, self.player, symbol):
             current_player = get_current_player(self.room_group_name)
             self.send(text_data=json.dumps({
-                'current_player': current_player
+                'current_player': current_player,
+                'symbol': symbol
             }))
         else:
             self.send_error_message()

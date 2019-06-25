@@ -182,11 +182,11 @@ class MauMau:
             if card in player.cards:
                 player.cards.remove(card)
 
-    def make_card_wish(self, colour, player):
+    def make_card_wish(self, symbol, player):
         if player == self.current_player:
-            if colour in "s c h d":
+            if symbol in "s c h d":
                 self.wait_for_card_wish = False
-                self.card_wished = colour
+                self.card_wished = symbol
                 self.choose_next_player()
                 return True
         return False

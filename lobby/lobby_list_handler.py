@@ -191,9 +191,9 @@ def check_if_won_mau_mau(lobby_id):
             return lobby.game.won_game()
 
 
-def wish_card_in_mau_mau(lobby_id, player, colour):
+def wish_card_in_mau_mau(lobby_id, player, symbol):
     if check_if_lobby_exists(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
-            return lobby.game.make_card_wish(colour, player)
+            return lobby.game.make_card_wish(symbol, player)
 

@@ -229,7 +229,7 @@ class MauMauConsumer(WebsocketConsumer):
                 self.draw_card_for_player()
             elif key[0] == "symbol":
                 symbol = text_data_json["symbol"]
-                self.wish_card(symbol)
+                self.wish_card_for_player(symbol)
         except IndexError as e:
             print(e)
 
@@ -263,15 +263,27 @@ class MauMauConsumer(WebsocketConsumer):
             else:
                 self.send_error_message()
 
-    def wish_card(self, symbol):
+    def wish_card_for_player(self, symbol):
         if wish_card_in_mau_mau(self.room_group_name, self.player, symbol):
             current_player = get_current_player(self.room_group_name)
-            self.send(text_data=json.dumps({
-                'current_player': current_player,
-                'symbol': symbol
-            }))
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'wish_card',
+                    'symbol': symbol,
+                    'current_player': current_player.to_json()
+                }
+            )
         else:
             self.send_error_message()
+
+    def wish_card(self, event):
+        current_player = event["current_player"]
+        symbol = event["symbol"]
+        self.send(text_data=json.dumps({
+            'current_player': current_player,
+            'symbol': symbol
+        }))
 
     def draw_card(self, event):
         player = event["player"]

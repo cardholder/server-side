@@ -152,11 +152,12 @@ class LobbyConsumer(WebsocketConsumer):
     # Receive message from room group
     def lobby_full(self, event):
         message = event['message']
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
-        self.disconnect(1000)
+        if self.player is None:
+            # Send message to WebSocket
+            self.send(text_data=json.dumps({
+                'message': message
+            }))
+            self.disconnect(1000)
 
     def send_lobby(self, lobby):
         self.send(text_data=json.dumps({

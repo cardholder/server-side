@@ -191,3 +191,16 @@ class MauMau:
                 self.choose_next_player()
                 return True
         return False
+
+    def remove_player_from_game(self, player):
+        if player in self.players:
+            cards = player.cards
+            for card in cards:
+                self.cards.append(card)
+
+            self.shuffle_cards()
+            player.cards=[]
+            if player == self.current_player:
+                self.choose_next_player()
+
+            self.players.remove(player)

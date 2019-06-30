@@ -123,6 +123,12 @@ def send_remove_player_from_mau_mau(lobby_id, players, current_player):
         }
     )
 
+    print({
+            'type': 'player.removed',
+            'players': players,
+            'current_player': current_player.to_json()
+        }.__str__())
+
 
 def get_lobby_list_as_array_no_empty_rooms():
     lobby_arr = []

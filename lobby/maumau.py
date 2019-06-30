@@ -14,6 +14,7 @@ class MauMau:
         self.wait_for_card_wish = False
         self.current_player = None
         self.direction_clock_wise = True
+        self.current_draw_punishment = 1
 
         self.players = []
         self.lobby_id = lobby_id
@@ -32,8 +33,6 @@ class MauMau:
         card_set = CardSet.objects.get(id=game.card_set_id)
         self.cards = list(card_set.cards.all())
 
-        self.current_draw_punishment = 1
-
         self.shuffle_cards()
         for player in self.players:
             self.draw_cards(player, 5)
@@ -46,7 +45,7 @@ class MauMau:
 
     def draw_cards(self, player, card_number=1):
 
-        if not self.wait_for_card_wish:
+        if self.wait_for_card_wish:
             return False
 
         if self.current_draw_punishment == 0:

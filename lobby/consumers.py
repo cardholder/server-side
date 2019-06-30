@@ -435,6 +435,6 @@ class MauMauConsumer(WebsocketConsumer):
         current_player = event["current_player"]
         player_id = event["player_id"]
         self.send(text_data=json.dumps({
-            'current_player': current_player,
-            'player_id': player_id
+            'player_id': player_id,
+            'current_player': current_player
         }))

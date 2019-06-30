@@ -843,11 +843,15 @@ class TestMauMau(TestCase):
         self.assertTrue(game.play_card(player, card_two))
         self.assertFalse(card_two in player.cards)
 
+    def test_play_ten_when_card_wished(self):
         player = Player(1, "test", "player")
         player_two = Player(1, "test", "player")
-        card_one = Card.objects.get(value="3", symbol="s")
-        card_two = Card.objects.get(value="3", symbol="c")
-        card_three = Card.objects.get(value="3", symbol="d")
         game = MauMau("lobby", [player, player_two])
-        cards = MauMauConsumer.compare_cards([card_one, card_two], [card_one, card_two, card_three])
-        self.assertEqual(cards, [card_three])
+        game.current_player = player
+        card_one = Card.objects.get(value="B", symbol="s")
+        card_two = Card.objects.get(value="10", symbol="c")
+        game.card_wished = 'h'
+        game.discard_pile.append(card_one)
+        player.cards = []
+        player.cards.append(card_two)
+        self.assertTrue(game.play_card(player, card_two))

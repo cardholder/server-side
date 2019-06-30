@@ -100,13 +100,14 @@ def remove_player_from_lobby(lobby_id, player):
         if isinstance(lobby.game, MauMau):
             lobby.game.remove_player_from_game(player)
 
-    if len(lobby.players) == 0 or lobby.game is not None:
+    if len(lobby.players) == 0:
         remove_lobby(lobby_id)
         send_remove_lobby(lobby_id)
     else:
-        if player.is_leader():
-            lobby.set_new_leader()
-        update_lobby(lobby_id)
+        if lobby.game is None:
+            if player.is_leader():
+                lobby.set_new_leader()
+            update_lobby(lobby_id)
 
 
 def get_lobby_list_as_array_no_empty_rooms():

@@ -99,6 +99,9 @@ def remove_player_from_lobby(lobby_id, player):
     if lobby.game is not None:
         if isinstance(lobby.game, MauMau):
             lobby.game.remove_player_from_game(player)
+            players_json = lobby.players_to_json()
+            current_player = lobby.game.current_player
+            send_remove_player_from_mau_mau(lobby_id, players_json, current_player)
 
     if len(lobby.players) == 0:
         remove_lobby(lobby_id)
@@ -107,6 +110,18 @@ def remove_player_from_lobby(lobby_id, player):
         if player.is_leader():
             lobby.set_new_leader()
         update_lobby(lobby_id)
+
+
+def send_remove_player_from_mau_mau(lobby_id, players, current_player):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        lobby_id,
+        {
+            'type': 'player.removed',
+            'players': players,
+            'current_player': current_player.to_json()
+        }
+    )
 
 
 def get_lobby_list_as_array_no_empty_rooms():
@@ -184,6 +199,7 @@ def get_discard_pile_card(lobby_id):
         lobby = lobby_list[str(lobby_id)]
         if isinstance(lobby.game, MauMau):
             discard_card = lobby.game.get_top_discard_card()
+            lobby.game.shu
             return discard_card
 
 

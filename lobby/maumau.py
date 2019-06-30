@@ -1,7 +1,6 @@
 # This is the class for player
 import random
 from .models import *
-from .player import Player
 import copy
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -10,6 +9,15 @@ from asgiref.sync import async_to_sync
 class MauMau:
 
     def __init__(self, lobby_id, players):
+        """
+        This is the constructor for Mau Mau game.
+
+        It sets some game vars and also loads the cards from the Database. The cards are shuffled and every player gets
+        5 cards.
+
+        :param lobby_id: lobby id where the game is stored
+        :param players: palyers that are playing this game
+        """
         self.card_wished = None
         self.wait_for_card_wish = False
         self.current_player = None
@@ -33,17 +41,27 @@ class MauMau:
         card_set = CardSet.objects.get(id=game.card_set_id)
         self.cards = list(card_set.cards.all())
 
-        self.shuffle_cards()
+        self.__shuffle_cards()
         for player in self.players:
             self.draw_cards(player, 5)
 
         self.discard_pile = []
         self.discard_pile.append(self.cards.pop())
 
-    def shuffle_cards(self):
+    def __shuffle_cards(self):
+        """
+        Shuffles the game cards.
+        """
         random.shuffle(self.cards)
 
     def draw_cards(self, player, card_number=1):
+        """
+        Draws a card for a player. The card number can be chosen. If the draw punisement is set, the card number is
+        overwritten.
+        :param player: Player that draws the card
+        :param card_number: Card number that will be drawn. Default is 1
+        :return: Returns Boolean. False when user has to wish a card.
+        """
 
         if self.wait_for_card_wish:
             return False
@@ -66,14 +84,24 @@ class MauMau:
         return False
 
     def shuffle_discard_pile_into_cards(self):
+        """
+        Shuffles the discard cards into the card list. Is called when card list is empty.
+        """
         if len(self.cards) <= 0:
             discard_card = self.discard_pile.pop()
             self.cards = copy.copy(self.discard_pile)
-            self.shuffle_cards()
+            self.__shuffle_cards()
             self.discard_pile = []
             self.discard_pile.append(discard_card)
 
     def play_card(self, player, card):
+        """
+        Play a card for the user and return True when successful.
+
+        :param player: Player who plays the card.
+        :param card: Card that the user wants to play.
+        :return: True when playing card was successful.
+        """
         top_card = self.discard_pile[len(self.discard_pile) - 1]
         if player in self.players and not self.wait_for_card_wish:
             if not player.has_card(card):
@@ -92,6 +120,10 @@ class MauMau:
         return False
 
     def check_card_action(self, card):
+        """
+        Checks if the card that is played, has special abilities.
+        :param card: Card that is to be checked.
+        """
         if card.value == "7":
             self.seven_punishment()
         elif card.value == "8":
@@ -102,15 +134,24 @@ class MauMau:
             self.jack_wish()
 
     def seven_punishment(self):
+        """
+        Sets the draw punishment higher.
+        """
         if self.current_draw_punishment == 1:
             self.current_draw_punishment = 2
         else:
             self.current_draw_punishment = self.current_draw_punishment + 2
 
     def eight_punishment(self):
+        """
+        Skips one Player.
+        """
         self.choose_next_player()
 
     def nine_punishment(self):
+        """
+        Changes the direction of the turns.
+        """
         self.direction_clock_wise = not self.direction_clock_wise
 
     def jack_wish(self):
@@ -200,7 +241,7 @@ class MauMau:
             for card in cards:
                 self.cards.append(card)
 
-            self.shuffle_cards()
+            self.__shuffle_cards()
             player.cards=[]
             if player == self.current_player:
                 self.choose_next_player()

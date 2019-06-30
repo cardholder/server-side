@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to Cardholder’s documentation! &#8212; Cardholder 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-cardholder-s-documentation">
+<h1>Welcome to Cardholder’s documentation!<a class="headerlink" href="#welcome-to-cardholder-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This is the documentation of the backend code of Cardholder.</p>
+</div>
+<div class="section" id="models">
+<h1>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lobby.models.Card">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.models.</code><code class="sig-name descname">Card</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.models.Card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model for cards.</p>
+<dl class="simple">
+<dt>Has the attributes:</dt><dd><ul class="simple">
+<li><p>value: value of card.</p></li>
+<li><p>symbol: card colour or symbol.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="lobby.models.Card.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#lobby.models.Card.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="lobby.models.Card.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#lobby.models.Card.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lobby.models.Card.to_json">
+<em class="property">property </em><code class="sig-name descname">to_json</code><a class="headerlink" href="#lobby.models.Card.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Card as dict.
+:return: card as dict.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lobby.models.CardSet">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.models.</code><code class="sig-name descname">CardSet</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.models.CardSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model for card set.</p>
+<dl class="simple">
+<dt>Has the attributes:</dt><dd><ul class="simple">
+<li><p>name: name of card set.</p></li>
+<li><p>cards: cards that are contained in the card set.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="lobby.models.CardSet.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#lobby.models.CardSet.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="lobby.models.CardSet.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#lobby.models.CardSet.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lobby.models.Game">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.models.</code><code class="sig-name descname">Game</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.models.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model for games.</p>
+<dl class="simple">
+<dt>Has the attributes:</dt><dd><ul class="simple">
+<li><p>name: name of the game.</p></li>
+<li><p>show_name: Name that is displayed on the frontend.</p></li>
+<li><p>max_players: Number of players that can play the game.</p></li>
+<li><p>card_set: Card set that is used in the game.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="lobby.models.Game.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#lobby.models.Game.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="lobby.models.Game.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#lobby.models.Game.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="consumer">
+<h1>Consumer<a class="headerlink" href="#consumer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lobby.consumers.LobbyListConsumer">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.consumers.</code><code class="sig-name descname">LobbyListConsumer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class of the lobbylist consumer.</p>
+<dl class="method">
+<dt id="lobby.consumers.LobbyListConsumer.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>User connects to the lobby list route. Name of the channel is “lobbylist”.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyListConsumer.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">close_code</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client disconnects from the consumer. Also leaves the channel
+:param close_code: Code for the Issue of disconnecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyListConsumer.remove_lobby">
+<code class="sig-name descname">remove_lobby</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer.remove_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the removed lobby to the client.
+:param event: dict with the message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyListConsumer.send_lobby_list">
+<code class="sig-name descname">send_lobby_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer.send_lobby_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends all existing lobbies, that are not in a game or empty to the client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyListConsumer.update_lobby">
+<code class="sig-name descname">update_lobby</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyListConsumer.update_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the updated lobby to the client when lobby is updated.
+:param event: dict with the message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lobby.consumers.LobbyCreateConsumer">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.consumers.</code><code class="sig-name descname">LobbyCreateConsumer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyCreateConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lobby.consumers.LobbyCreateConsumer.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyCreateConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client connects to consumer
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyCreateConsumer.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">close_code</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyCreateConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client disconnects from the consumer.
+:param close_code: Code for the Issue of disconnecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyCreateConsumer.receive">
+<code class="sig-name descname">receive</code><span class="sig-paren">(</span><em class="sig-param">text_data</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyCreateConsumer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the data given are correct. If the data from the client are correct, a lobby is created and the lobby_id
+is sent to the creator.
+:param text_data: Data that are sent by the client.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lobby.consumers.LobbyConsumer">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.consumers.</code><code class="sig-name descname">LobbyConsumer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lobby.consumers.LobbyConsumer.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client connects to the consumer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyConsumer.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">close_code</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>User disconnects from lobby. Player is removed from array in lobby.
+:param close_code: Code for the Issue of disconnecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyConsumer.lobby_full">
+<code class="sig-name descname">lobby_full</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer.lobby_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the user a message when lobby is full.
+:param event: message for player
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyConsumer.receive">
+<code class="sig-name descname">receive</code><span class="sig-paren">(</span><em class="sig-param">text_data</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client sends data to Server. If the data sent contain a name, the user is added to the player. If the data are
+a player id, the player with the id gets kicked. If it is a message. The game is started.
+:param text_data: Data sent by client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.LobbyConsumer.send_start_to_group">
+<code class="sig-name descname">send_start_to_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.LobbyConsumer.send_start_to_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends all clients in the lobby that the game is started.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lobby.consumers.MauMauConsumer">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.consumers.</code><code class="sig-name descname">MauMauConsumer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.cards_to_json">
+<em class="property">static </em><code class="sig-name descname">cards_to_json</code><span class="sig-paren">(</span><em class="sig-param">cards</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.cards_to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts cards of a player to a json.
+:param cards: cards that are converted.
+:return: cards as dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.compare_cards">
+<em class="property">static </em><code class="sig-name descname">compare_cards</code><span class="sig-paren">(</span><em class="sig-param">cards_before_drawing</em>, <em class="sig-param">cards_after_drawing</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.compare_cards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares cards of to card arrays.
+:param cards_before_drawing: Card array before client draws.
+:param cards_after_drawing: Card array after client draws.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client connects to the consumer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">close_code</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>User disconnects from lobby. Player is removed from game and that is send to the game.
+:param close_code: Code for the Issue of disconnecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.draw_card_for_player">
+<code class="sig-name descname">draw_card_for_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.draw_card_for_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a card for a player and sends the card to the player, as well as the next player.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.jack_wish">
+<code class="sig-name descname">jack_wish</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.jack_wish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the client that he has to wish a card.
+:param event: Message for client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.play_card_for_player">
+<code class="sig-name descname">play_card_for_player</code><span class="sig-paren">(</span><em class="sig-param">card</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.play_card_for_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays a card for a player and sends the played card to all clients.
+:param card: Card that is played.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.player_removed">
+<code class="sig-name descname">player_removed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.player_removed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send all clients the current player and the player that left the game.
+:param event: Message for client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.receive">
+<code class="sig-name descname">receive</code><span class="sig-paren">(</span><em class="sig-param">text_data</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the data from client.
+If client sends player_id, the player id will be associated to the existing player in the game.
+If card is send, the turn is made.
+If player is send, a card will be drawn for player.
+:param text_data: Client message</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.send_error_message">
+<code class="sig-name descname">send_error_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.send_error_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error message send to client when action is not allowed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.send_initialized_game">
+<code class="sig-name descname">send_initialized_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.send_initialized_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends initialized game to the player.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.send_winner">
+<code class="sig-name descname">send_winner</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.send_winner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the winner.
+:param event: Message for client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.sort_player_list">
+<code class="sig-name descname">sort_player_list</code><span class="sig-paren">(</span><em class="sig-param">players</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.sort_player_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts the player list so that the player of the consumer is at the top.
+:param players: Player list
+:return: Sorted list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.consumers.MauMauConsumer.wish_card_for_player">
+<code class="sig-name descname">wish_card_for_player</code><span class="sig-paren">(</span><em class="sig-param">symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.consumers.MauMauConsumer.wish_card_for_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wishes a symbol and sends the wished symbol to all clients in game.
+:param symbol: Symbol that is wished.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lobby">
+<h1>Lobby<a class="headerlink" href="#lobby" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lobby.lobby.Lobby">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.lobby.</code><code class="sig-name descname">Lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">game_name</em>, <em class="sig-param">visibility</em>, <em class="sig-param">max_players</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the class for creating a lobby.</p>
+<dl class="method">
+<dt id="lobby.lobby.Lobby.add_player">
+<code class="sig-name descname">add_player</code><span class="sig-paren">(</span><em class="sig-param">player</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.add_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the lobby.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – Player that is added to the lobby</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.get_highest_player_id_of_lobby">
+<code class="sig-name descname">get_highest_player_id_of_lobby</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.get_highest_player_id_of_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the highest player id from lobby
+:return: lobby_id as int. Returns -1, when no player is in lobby.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.is_not_empty">
+<code class="sig-name descname">is_not_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.is_not_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if lobby is not empty and returns it.
+:return: True when lobby is not empty as Boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.is_not_full">
+<code class="sig-name descname">is_not_full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.is_not_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the lobby is not full and returns it.
+:return: True when lobby is not full as Boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.players_to_json">
+<code class="sig-name descname">players_to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.players_to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets players of lobby and returns them as a dictionary
+:return: list of player as dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.remove_player">
+<code class="sig-name descname">remove_player</code><span class="sig-paren">(</span><em class="sig-param">player</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.remove_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from the lobby.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – Player that is removed from the lobby</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.set_new_leader">
+<code class="sig-name descname">set_new_leader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.set_new_leader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new leader in lobby, when no leader is in the current lobby.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.lobby.Lobby.to_json">
+<code class="sig-name descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby.Lobby.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the lobby as dictionary
+:return: lobby as dict</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="player">
+<h1>Player<a class="headerlink" href="#player" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lobby.player.Player">
+<em class="property">class </em><code class="sig-prename descclassname">lobby.player.</code><code class="sig-name descname">Player</code><span class="sig-paren">(</span><em class="sig-param">player_id</em>, <em class="sig-param">name</em>, <em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.player.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a player.</p>
+<dl class="method">
+<dt id="lobby.player.Player.has_card">
+<code class="sig-name descname">has_card</code><span class="sig-paren">(</span><em class="sig-param">card</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.player.Player.has_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if player has the card in his cards array.
+:param card: card that is compared to
+:return: True, when card exists in cards array as Boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.player.Player.is_leader">
+<code class="sig-name descname">is_leader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.player.Player.is_leader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if the player is a leader.
+:return: True, when player is “leader” as Boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lobby.player.Player.to_json">
+<code class="sig-name descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.player.Player.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a dict from player with his card_amount. Returns this dict.
+:return: player json as dict</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lobby.lobby_list_handler">
+<span id="lobby-list-handler"></span><h1>Lobby list handler<a class="headerlink" href="#module-lobby.lobby_list_handler" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lobby.lobby_list_handler.add_player_to_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">add_player_to_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.add_player_to_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the lobby. Also generates a player id for the client and the role.
+:param lobby_id: Id of lobby.
+:param name: Name of player.
+:return: Lobby id and player that is added to lobby.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.check_if_lobby_exists">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">check_if_lobby_exists</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.check_if_lobby_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if lobby exists in list.
+:param lobby_id: Id of lobby that should exist.
+:return: True when it exists.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.check_if_won_mau_mau">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">check_if_won_mau_mau</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.check_if_won_mau_mau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if someone won in the game Mau Mau.
+:param lobby_id: Id of lobby.
+:return: True when someone won.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.create_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">create_lobby</code><span class="sig-paren">(</span><em class="sig-param">game_name</em>, <em class="sig-param">visibility</em>, <em class="sig-param">max_players</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.create_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a lobby and adds it to the lobby list. Also generates a lobby id.
+:param game_name: Name of the game.
+:param visibility: Visibility of lobby
+:param max_players: Maximum number of players that can join the lobby.
+:return: lobby id of lobby.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.draw_card_in_game">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">draw_card_in_game</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">player</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.draw_card_in_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws card in game.
+:param lobby_id: Id of lobby.
+:param player: Player that draws card.
+:return: True when turn is successful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.generate_id">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">generate_id</code><span class="sig-paren">(</span><em class="sig-param">string_length=7</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.generate_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a random string with numbers and letters.
+:param string_length: Length of generated string. Default is 7
+:return: String that is generated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_card_size_of_mau_mau_game">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_card_size_of_mau_mau_game</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_card_size_of_mau_mau_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get card amount of the card array.
+:param lobby_id: Id of lobby.
+:return: Card amount as int</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_current_player">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_current_player</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_current_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the current player that is playing in the game.
+:param lobby_id: Id of lobby.
+:return: Player that must make a turn.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_discard_pile_card">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_discard_pile_card</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_discard_pile_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the top card of the discard pile.
+:param lobby_id: Id of lobby.
+:return: Card that is on top.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns lobby with given lobby id.
+:param lobby_id: Id of lobby.
+:return: Lobby.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_lobby_list_as_array_no_empty_rooms">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_lobby_list_as_array_no_empty_rooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_lobby_list_as_array_no_empty_rooms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of lobbies that are not empty, full or in a game.
+:return: List of lobbies.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_player_of_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_player_of_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">player_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_player_of_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a player from lobby.
+:param lobby_id: Id of lobby.
+:param player_id: Id of player.
+:return: Player when player exists in lobby. Else it returns None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_players_of_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_players_of_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_players_of_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the players of the lobby.
+:param lobby_id: Id of lobby.
+:return: Players that are in the specific lobby.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.get_players_of_lobby_as_json">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">get_players_of_lobby_as_json</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.get_players_of_lobby_as_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the players of the lobby as json.
+:param lobby_id: Id of lobby.
+:return: Players as dict.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.play_card_in_game">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">play_card_in_game</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">player</em>, <em class="sig-param">card</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.play_card_in_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play card in the game.
+:param lobby_id: Id of lobby.
+:param player: Player that plays card.
+:param card: Card that is played.
+:return: True when turn is successful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.remove_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">remove_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.remove_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes lobby from list.
+:param lobby_id: Id of lobby that is removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.remove_player_from_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">remove_player_from_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">player</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.remove_player_from_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from a lobby. If player is in game. He is removed from the game as well.
+Sends updates to lobby list and the lobby, when lobby is not in game.
+:param lobby_id: Id of lobby.
+:param player: Player that is removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.send_lobby_is_full">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">send_lobby_is_full</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.send_lobby_is_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send client that lobby is full.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lobby_id</strong> – Id of lobby that is full.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.send_remove_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">send_remove_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.send_remove_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send lobby id of lobby that is removed from lobby list.
+:param lobby_id: Id of lobby that is removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.start_game">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">start_game</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.start_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes game for lobby.
+:param lobby_id: Id of lobby.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.update_lobby">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">update_lobby</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.update_lobby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends update of lobby to clients
+:param lobby_id: Id of lobby that is updated</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lobby.lobby_list_handler.wish_card_in_mau_mau">
+<code class="sig-prename descclassname">lobby.lobby_list_handler.</code><code class="sig-name descname">wish_card_in_mau_mau</code><span class="sig-paren">(</span><em class="sig-param">lobby_id</em>, <em class="sig-param">player</em>, <em class="sig-param">symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#lobby.lobby_list_handler.wish_card_in_mau_mau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client wishes a symbol.
+:param lobby_id: Id of lobby.
+:param player: Player who wishes the symbol.
+:param symbol: Symbol that is wished.
+:return: True when it was successful.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Cardholder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Stefan Kroeker.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

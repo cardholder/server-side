@@ -99,7 +99,6 @@ def remove_player_from_lobby(lobby_id, player):
     if lobby.game is not None:
         if isinstance(lobby.game, MauMau):
             lobby.game.remove_player_from_game(player)
-            print(get_current_player(lobby_id).__str__())
 
     if len(lobby.players) == 0 or lobby.game is not None:
         remove_lobby(lobby_id)

@@ -10,6 +10,11 @@ from asgiref.sync import async_to_sync
 class MauMau:
 
     def __init__(self, lobby_id, players):
+        self.card_wished = None
+        self.wait_for_card_wish = False
+        self.current_player = None
+        self.direction_clock_wise = True
+
         self.players = []
         self.lobby_id = lobby_id
         if isinstance(players, list):
@@ -19,7 +24,6 @@ class MauMau:
             self.players.append(players)
 
         players_len = len(self.players)
-        self.current_player = None
         if players_len > 0:
             self.current_player = self.players[random.randint(0, players_len) - 1]
 
@@ -30,16 +34,12 @@ class MauMau:
 
         self.current_draw_punishment = 1
 
-        self.direction_clock_wise = True
         self.shuffle_cards()
         for player in self.players:
             self.draw_cards(player, 5)
 
         self.discard_pile = []
         self.discard_pile.append(self.cards.pop())
-
-        self.card_wished = None
-        self.wait_for_card_wish = False
 
     def shuffle_cards(self):
         random.shuffle(self.cards)

@@ -855,3 +855,10 @@ class TestMauMau(TestCase):
         player.cards = []
         player.cards.append(card_two)
         self.assertTrue(game.play_card(player, card_two))
+
+    def test_next_player_with_only_one_player(self):
+        player = Player(1, "test", "player")
+        game = MauMau("lobby", [player])
+        game.current_player = player
+        game.choose_next_player()
+        self.assertTrue(game.current_player, player)

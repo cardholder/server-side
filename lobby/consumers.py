@@ -238,6 +238,7 @@ class MauMauConsumer(WebsocketConsumer):
         players = get_players_of_lobby_as_json(self.room_group_name)
         current_player = get_current_player(self.room_group_name)
         print(current_player)
+        print(players)
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,

@@ -862,3 +862,19 @@ class TestMauMau(TestCase):
         game.current_player = player
         game.choose_next_player()
         self.assertTrue(game.current_player, player)
+
+    def test_removing_player_current_player_leaves(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau("lobby", [player])
+        game.current_player = player_two
+        game.remove_player_from_game(player_two)
+        self.assertTrue(game.current_player, player)
+
+    def test_removing_player_not_current_player_leaves(self):
+        player = Player(1, "test", "player")
+        player_two = Player(1, "test", "player")
+        game = MauMau("lobby", [player])
+        game.current_player = player_two
+        game.remove_player_from_game(player)
+        self.assertTrue(game.current_player, player_two)

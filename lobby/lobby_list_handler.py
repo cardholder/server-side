@@ -100,31 +100,13 @@ def remove_player_from_lobby(lobby_id, player):
         if isinstance(lobby.game, MauMau):
             lobby.game.remove_player_from_game(player)
 
-    if len(lobby.players) == 0 and lobby.game is not None:
+    if len(lobby.players) == 0 or lobby.game is not None:
         remove_lobby(lobby_id)
         send_remove_lobby(lobby_id)
     else:
         if player.is_leader():
             lobby.set_new_leader()
         update_lobby(lobby_id)
-
-
-def send_remove_player_from_mau_mau(lobby_id, players, current_player):
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)(
-        lobby_id,
-        {
-            'type': 'player.removed',
-            'players': players,
-            'current_player': current_player.to_json()
-        }
-    )
-
-    print({
-            'type': 'player.removed',
-            'players': players,
-            'current_player': current_player.to_json()
-        }.__str__())
 
 
 def get_lobby_list_as_array_no_empty_rooms():

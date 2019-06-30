@@ -200,3 +200,8 @@ def wish_card_in_mau_mau(lobby_id, player, symbol):
         if isinstance(lobby.game, MauMau):
             return lobby.game.make_card_wish(symbol, player)
 
+
+def get_players_of_lobby_as_json(lobby_id):
+    if check_if_lobby_exists(lobby_id):
+        lobby = lobby_list[str(lobby_id)]
+        return lobby.players_to_json()

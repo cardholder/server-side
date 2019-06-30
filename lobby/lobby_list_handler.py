@@ -99,9 +99,6 @@ def remove_player_from_lobby(lobby_id, player):
     if lobby.game is not None:
         if isinstance(lobby.game, MauMau):
             lobby.game.remove_player_from_game(player)
-            players_json = lobby.players_to_json()
-            current_player = lobby.game.current_player
-            send_remove_player_from_mau_mau(lobby_id, players_json, current_player)
 
     if len(lobby.players) == 0:
         remove_lobby(lobby_id)

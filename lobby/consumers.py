@@ -234,10 +234,18 @@ class MauMauConsumer(WebsocketConsumer):
             print(e)
 
     def disconnect(self, close_code):
-        if self.lobby_id is not None:
-            remove_player_from_lobby(self.lobby_id, self.player)
-            players = get_players_of_lobby_as_json(self.room_group_name)
-            current_player = get_current_player(self.room_group_name)
+        remove_player_from_lobby(self.lobby_id, self.player)
+        players = get_players_of_lobby_as_json(self.room_group_name)
+        current_player = get_current_player(self.room_group_name)
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'player.removed',
+                'players': players,
+                'current_player': current_player.to_json()
+            }
+        )
 
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(

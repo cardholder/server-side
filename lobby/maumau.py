@@ -242,7 +242,7 @@ class MauMau:
                 self.cards.append(card)
 
             self.__shuffle_cards()
-            player.cards=[]
+            player.cards = []
             if player == self.current_player:
                 self.choose_next_player()
 

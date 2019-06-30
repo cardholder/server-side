@@ -15,8 +15,8 @@ class MauMau:
         It sets some game vars and also loads the cards from the Database. The cards are shuffled and every player gets
         5 cards.
 
-        :param lobby_id: lobby id where the game is stored
-        :param players: palyers that are playing this game
+        :param lobby_id: lobby id where the game is stored.
+        :param players: palyers that are playing this game.
         """
         self.card_wished = None
         self.wait_for_card_wish = False
@@ -58,8 +58,8 @@ class MauMau:
         """
         Draws a card for a player. The card number can be chosen. If the draw punisement is set, the card number is
         overwritten.
-        :param player: Player that draws the card
-        :param card_number: Card number that will be drawn. Default is 1
+        :param player: Player that draws the card.
+        :param card_number: Card number that will be drawn. Default is 1.
         :return: Returns Boolean. False when user has to wish a card.
         """
 
@@ -155,6 +155,9 @@ class MauMau:
         self.direction_clock_wise = not self.direction_clock_wise
 
     def jack_wish(self):
+        """
+        Sends to the player the message to wish a card colour.
+        """
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             self.lobby_id,
@@ -163,6 +166,10 @@ class MauMau:
         self.wait_for_card_wish = True
 
     def choose_next_player(self):
+        """
+        Chooses the next player. This is called, when a player made a turn. To decide which player is the next player,
+        is depending on the direction.
+        """
         player_index = self.players.index(self.current_player)
         if self.direction_clock_wise:
             if player_index >= len(self.players) - 1:
@@ -211,10 +218,18 @@ class MauMau:
         return False
 
     def get_top_discard_card(self):
+        """
+        Returns the top card of the discard pile.
+        :return: Top card of discard pile.
+        """
         discard_pile_index = len(self.discard_pile) - 1
         return self.discard_pile[discard_pile_index]
 
     def won_game(self):
+        """
+        Checks if a player has 0 cards and returns True when someone has empty cards.
+        :return: True, when a player has no cards.
+        """
         for player in self.players:
             if len(player.cards) == 0:
 
@@ -222,11 +237,23 @@ class MauMau:
         return False
 
     def remove_card_from_player(self, card, player):
+        """
+        Removes a card from a player.
+        :param card: Card that is removed.
+        :param player: player who gets the card removed.
+        :return: True when it succeeds.
+        """
         if player in self.players:
             if card in player.cards:
                 player.cards.remove(card)
 
     def make_card_wish(self, symbol, player):
+        """
+        Player wishes a card, only s, c, h or d can be wished. They are the first characters of the card colours.
+        :param symbol: symbol that is wished.
+        :param player: player who wishes the card colour.
+        :return: True when it succeeds.
+        """
         if player == self.current_player:
             if symbol in "s c h d":
                 self.wait_for_card_wish = False
@@ -236,6 +263,10 @@ class MauMau:
         return False
 
     def remove_player_from_game(self, player):
+        """
+        Removes a player from the game. Chooses next player, when player, who is removed, is the current player.
+        :param player: player that is removed.
+        """
         if player in self.players:
             cards = player.cards
             for card in cards:

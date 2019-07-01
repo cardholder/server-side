@@ -3,14 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Cardholder's documentation!
+Welcome to cardholder!
 ======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-This is the documentation of the backend code of Cardholder.
+This is the documentation of the backend code of cardholder.
 
 Models
 ======

@@ -545,8 +545,10 @@ class MauMauConsumer(WebsocketConsumer):
         current_player = event["current_player"]
         players = event["players"]
         players_json = []
-        players = self.sort_player_list(players)
-        for player in players:
+        players_sorted = self.sort_player_list(players)
+
+        for player in players_sorted:
+            print(str(player))
             players_json.append(player.to_json())
 
         self.send(text_data=json.dumps({

@@ -300,7 +300,7 @@ class MauMauConsumer(WebsocketConsumer):
         :param close_code: Code for the Issue of disconnecting.
         """
         remove_player_from_lobby(self.room_group_name, self.player)
-        players = get_players_of_lobby_as_json(self.room_group_name)
+        players = get_players_of_lobby(self.room_group_name)
         current_player = get_current_player(self.room_group_name)
 
         if players is not None:
@@ -544,6 +544,11 @@ class MauMauConsumer(WebsocketConsumer):
         """
         current_player = event["current_player"]
         players = event["players"]
+        players_json = []
+        players = self.sort_player_list(players)
+        for player in players:
+            players_json.append(player.to_json())
+
         self.send(text_data=json.dumps({
             'players': players,
             'current_player': current_player

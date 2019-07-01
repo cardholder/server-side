@@ -198,11 +198,13 @@ class MauMau:
 
     def _play_wished_card(self, card):
         if card.value == "B" or card.value == "10" or card.symbol == self.card_wished:
+            self.card_wished = None
+            self.wait_for_card_wish = False
             self.discard_pile.append(card)
             self.remove_card_from_player(card, self.current_player)
-            self.card_wished = None
             self.check_card_action(card)
-            self.choose_next_player()
+            if not self.wait_for_card_wish:
+                self.choose_next_player()
             return True
         else:
             return False

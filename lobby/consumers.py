@@ -548,13 +548,13 @@ class MauMauConsumer(WebsocketConsumer):
         new_player_list = []
         for player in players:
             new_player_list.append(Player(player["id"], player["name"], player["role"]))
-            
+
         players_sorted = self.sort_player_list(new_player_list)
 
         for player in players_sorted:
             players_json.append(player.to_json())
 
         self.send(text_data=json.dumps({
-            'players': players,
+            'players': players_json,
             'current_player': current_player
         }))

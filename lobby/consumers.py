@@ -300,18 +300,16 @@ class MauMauConsumer(WebsocketConsumer):
         :param close_code: Code for the Issue of disconnecting.
         """
         remove_player_from_lobby(self.room_group_name, self.player)
-        players = get_players_of_lobby_as_json(self.room_group_name)
         current_player = get_current_player(self.room_group_name)
 
-        if players is not None:
-            async_to_sync(self.channel_layer.group_send)(
-                self.room_group_name,
-                {
-                    'type': 'player.removed',
-                    'players': players,
-                    'current_player': current_player.to_json()
-                }
-            )
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'player.removed',
+                'current_player': current_player.to_json()
+            }
+        )
+
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
@@ -543,13 +541,10 @@ class MauMauConsumer(WebsocketConsumer):
         :param event: Message for client.
         """
         current_player = event["current_player"]
-        players = event["players"]
         players_json = []
-        new_player_list = []
-        for player in players:
-            new_player_list.append(Player(player["id"], player["name"], player["role"]))
+        players = get_players_of_lobby(self.room_group_name)
 
-        players_sorted = self.sort_player_list(new_player_list)
+        players_sorted = self.sort_player_list(players)
 
         for player in players_sorted:
             players_json.append(player.to_json())

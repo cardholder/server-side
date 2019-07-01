@@ -200,9 +200,9 @@ class MauMau:
         if card.value == "B" or card.value == "10" or card.symbol == self.card_wished:
             self.discard_pile.append(card)
             self.remove_card_from_player(card, self.current_player)
+            self.card_wished = None
             self.check_card_action(card)
             self.choose_next_player()
-            self.card_wished = None
             return True
         else:
             return False
